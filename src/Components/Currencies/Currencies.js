@@ -5,18 +5,27 @@ import { Link } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 import { useState } from "react"
 import API from "../../API/API"
-import { getCoinDataAction, getCoinsAndStats_Action, getValuesActions } from "../../Redux/Actions/Actions"
+import { getCoinsAndStats_Action, getUpdatedValues_Actions } from "../../Redux/Actions/Actions"
 
 
 
-export const Currencies = ({simplified}) => {
+export const Currencies = ({ simplified }) => {
     const dispatch = useDispatch()
 
 
 
-        //__GETTING VALUES FROM STORE
-        const value = useSelector(store=>store.displayCryptosOverPage_Reducer)
+    //__GETTING VALUES FROM STORE
+    const value = useSelector(store => store.displayCryptosOverPage_Reducer)
 
+
+    // ----------------------------
+    // SETTING NEW VALUES
+    useEffect(() => {
+        if (!simplified) {
+            dispatch(getUpdatedValues_Actions())
+        }
+    }, [])
+    // ----------------------------
 
 
 
@@ -27,34 +36,27 @@ export const Currencies = ({simplified}) => {
 
 
 
-// ----------------------------
-    // ____________useSelectors____________
-    // useEffect(()=>{
-    //     dispatch(getValuesActions())
-    //     if(!simplified){
-    //     }
-    // },[])
-// ----------------------------
-
-
-
-// ----------------------------
-// ___Sending Data (Stats and Coins) To Store || Dispatch
-useEffect(() => {
-    const fetchData = async () => {
-        const Obj = await API(value.limit?value.limit:10)
-        dispatch(getCoinsAndStats_Action(Obj))
-    }
-    fetchData()
-}, [])
-// ___Receiving Data (Stats and Coins) from Store || Selector
-const cryptosArr = useSelector((store) => store.getCoinsAndStats_Reducer.coins)
-// ----------------------------
 
 
 
 
-// ----------------------------
+    // ----------------------------
+    // ___Sending Data (Stats and Coins) To Store || Dispatch
+    useEffect(() => {
+        const fetchData = async () => {
+            const Obj = await API(value.limit ? value.limit : 10)
+            dispatch(getCoinsAndStats_Action(Obj))
+        }
+        fetchData()
+    }, [value])
+    // ___Receiving Data (Stats and Coins) from Store || Selector
+    const cryptosArr = useSelector((store) => store.getCoinsAndStats_Reducer.coins)
+    // ----------------------------
+
+
+
+
+    // ----------------------------
     //___initial rendering of all available currencies
     useEffect(() => {
         setCryptos([...cryptosArr])
@@ -70,17 +72,17 @@ const cryptosArr = useSelector((store) => store.getCoinsAndStats_Reducer.coins)
 
         setCryptos(filteredArray)
     }, [searchTerm])
-// ----------------------------
+    // ----------------------------
 
 
 
 
-// ----------------------------
+    // ----------------------------
     // ____________EVENT HANDLER____________
     const handleChange = (e) => {
         setSearchTerm(e.target.value)
     }
-// ----------------------------
+    // ----------------------------
 
 
 
@@ -108,7 +110,7 @@ const cryptosArr = useSelector((store) => store.getCoinsAndStats_Reducer.coins)
 
         )
     })
-// ----------------------------
+    // ----------------------------
 
 
 
@@ -119,7 +121,7 @@ const cryptosArr = useSelector((store) => store.getCoinsAndStats_Reducer.coins)
             {/* <h1>Crypto Currencies</h1> */}
             <div className="coinsGrid">
                 <div className="searchHolder" >
-                    <input type="text" placeholder="Search Coin" className="search" onChange={handleChange} style={{ display: value.display?value.display:"block" }} />
+                    <input type="text" placeholder="Search Coin" className="search" onChange={handleChange} style={{ display: value.display ? value.display : "block" }} />
                 </div>
                 {cryptosListAfterSearch.length != 0 ? renderList : <p>Loading...</p>}
             </div>

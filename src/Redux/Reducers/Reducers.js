@@ -31,7 +31,7 @@ return state
 }
 
 
-export const getNewsCountReducer = (state={},{type})=>{
+export const displayNewsOverPage_Reducer = (state={},{type})=>{
 if(type==="GET_NEWS_VALUES"){
     return {count:100,display:"block"}
 }

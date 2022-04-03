@@ -53,7 +53,7 @@ export const getDefaultValues_Action = ()=>{
 
 
 
-export const getNewsValuesActions = ()=>{
+export const getNewsUpdatedValues_Actions = ()=>{
     const GET_NEWS_VALUES = "GET_NEWS_VALUES"
     return{
         type: GET_NEWS_VALUES,
@@ -66,7 +66,7 @@ export const getNewsValuesActions = ()=>{
 
 
 
-export const getNewsDefault = ()=>{
+export const getNewsDefault_Action = ()=>{
     const GET_NEWS_DEFAULT = "GET_NEWS_DEFAULT"
     return{
         type: GET_NEWS_DEFAULT,

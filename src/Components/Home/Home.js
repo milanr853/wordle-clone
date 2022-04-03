@@ -2,66 +2,67 @@ import "./home.css"
 
 import { millify } from 'millify'
 import API from "../../API/API"
-import { getCoinDataAction, getCoinsAndStats_Action, getDefault, getDefaultValues_Action, getNewsArrayAction, getNewsDefault } from "../../Redux/Actions/Actions"
-import { useDispatch, useStore } from "react-redux"
+import { getCoinsAndStats_Action, getDefaultValues_Action, getNewsData_Action, getNewsDefault_Action } from "../../Redux/Actions/Actions"
+import { useDispatch } from "react-redux"
 import { useSelector } from "react-redux"
 import { useEffect } from "react"
 import { Currencies } from "../Currencies/Currencies"
 import { News } from "../News/News"
 import { Link } from "react-router-dom"
 
-import { getValuesActions, getNewsValuesActions } from "../../Redux/Actions/Actions"
-import NewsApi from "../../API/NewsApi"
 import { useState } from "react"
+import NewsApi from "../../API/NewsApi"
 
 
 
 export const Home = () => {
     const dispatch = useDispatch()
-    const [simplified,setSimplified] = useState(true)
+    const [simplified, setSimplified] = useState(true)
 
 
     //__DISPATCH DEFAULT VALUES ACTION
-    useEffect(()=>{
+    useEffect(() => {
         dispatch(getDefaultValues_Action())
-    },[])
+        dispatch(getNewsDefault_Action())
+    }, [])
     //__GETTING VALUES FROM STORE
-    const values = useSelector(store=>store.displayCryptosOverPage_Reducer)
+    const values = useSelector(store => store.displayCryptosOverPage_Reducer)
+    const newsValues = useSelector(store => store.displayNewsOverPage_Reducer)
 
 
 
 
-// -----------------------------------------------------------------------------------
-// ___Sending Data (Stats and Coins) To Store || Dispatch
+    // -----------------------------------------------------------------------------------
+    // ___Sending Data (Stats and Coins) To Store || Dispatch
     useEffect(() => {
         const fetchData = async () => {
-            const Obj = await API(values.limit && values.limit <= 10? values.limit : 10)
+            const Obj = await API(values.limit ? values.limit : 10)
             dispatch(getCoinsAndStats_Action(Obj))
+            const response = await NewsApi("Cryptocurrency", newsValues.count && newsValues.count <= 3 ? newsValues.count : 3)
+            dispatch(getNewsData_Action(response))
         }
         fetchData()
-    }, [])
+    }, [values])
 
-// ___Receiving Data (Stats and Coins) from Store || Selector
+    // ___Receiving Data (Stats and Coins) from Store || Selector
     const statsObj = useSelector((store) => store.getCoinsAndStats_Reducer.stats)
-// -----------------------------------------------------------------------------------
+    // -----------------------------------------------------------------------------------
 
 
 
 
     // ____________EVENT HANDLERS____________
     const showMoreCurrencies = () => {
-        // setSimplified(false)
+        setSimplified(false)
     }
     const showMoreNews = async () => {
-        // const Data = await API(100)
-        // dispatch(getCoinDataAction(Data))
-        // dispatch(getNewsValuesActions())
+        setSimplified(false)
     }
 
 
 
 
-// -----------------------------------------------------------------------------------
+    // -----------------------------------------------------------------------------------
     return (
         <>
             {
@@ -99,12 +100,12 @@ export const Home = () => {
                             <h2>Top 10 Crypto Currencies in the World</h2>
                             <Link to='/currencies' onClick={showMoreCurrencies}>Show More</Link>
                         </div>
-                        <Currencies/>
+                        <Currencies simplified={simplified} />
                         <div style={{ display: "flex", width: "100%", justifyContent: "space-between" }}>
                             <h2>Latest Crypto News around the world</h2>
                             <Link to='/news' onClick={showMoreNews}>Show More</Link>
                         </div>
-                        <News/>
+                        <News simplified={simplified} />
                     </>
                     : <h1 className="firstHeading">Loading...</h1>
             }
