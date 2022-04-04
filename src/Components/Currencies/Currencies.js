@@ -10,7 +10,13 @@ import { getCoinsAndStats_Action, getUpdatedValues_Actions } from "../../Redux/A
 
 
 export const Currencies = ({ simplified }) => {
+
     const dispatch = useDispatch()
+// ____________STATES____________
+    const [searchTerm, setSearchTerm] = useState("")
+    const [cryptosListAfterSearch, setCryptos] = useState([])
+// ----------------------------
+
 
 
 
@@ -18,8 +24,10 @@ export const Currencies = ({ simplified }) => {
     const value = useSelector(store => store.displayCryptosOverPage_Reducer)
 
 
+
+
     // ----------------------------
-    // SETTING NEW VALUES
+    // SETTING NEW VALUES Condition
     useEffect(() => {
         if (!simplified) {
             dispatch(getUpdatedValues_Actions())
@@ -29,22 +37,13 @@ export const Currencies = ({ simplified }) => {
 
 
 
-    // ____________STATES____________
-    const [searchTerm, setSearchTerm] = useState("")
-    const [cryptosListAfterSearch, setCryptos] = useState([])
-    // ----------------------------
-
-
-
-
-
 
 
     // ----------------------------
     // ___Sending Data (Stats and Coins) To Store || Dispatch
     useEffect(() => {
         const fetchData = async () => {
-            const Obj = await API(value.limit ? value.limit : 10)
+            const Obj = await API(value.limit ? value.limit : 100)
             dispatch(getCoinsAndStats_Action(Obj))
         }
         fetchData()
@@ -56,23 +55,25 @@ export const Currencies = ({ simplified }) => {
 
 
 
+
     // ----------------------------
-    //___initial rendering of all available currencies
+    //___setting up of available currencies (to render them)
     useEffect(() => {
-        setCryptos([...cryptosArr])
+        setCryptos(cryptosArr?[...cryptosArr]:[])
     }, [cryptosArr])
 
-    //___final rendering after filtering from search term
+    //filtering out all the currencies a/t the search term || then setting up the available currencies 
     useEffect(() => {
-        const filteredArray = cryptosArr.filter((currency) => {
+        const filteredArray = cryptosArr ? cryptosArr.filter((currency) => {
             if (currency.name.toLowerCase().includes(searchTerm.toLowerCase())) {
                 return currency
             }
-        })
+        }) : []
 
         setCryptos(filteredArray)
     }, [searchTerm])
     // ----------------------------
+
 
 
 
@@ -87,8 +88,9 @@ export const Currencies = ({ simplified }) => {
 
 
 
-    // ____________RENDER-LIST____________
-    const renderList = cryptosListAfterSearch.map((currency) => {
+
+    // ____________RENDERING LIST OF FILTERED CURRENCIES || MAP____________
+    const renderList = cryptosListAfterSearch?cryptosListAfterSearch.map((currency) => {
         const { uuid, symbol, name, change, iconUrl, marketCap, price, rank } = currency
 
         return (
@@ -109,8 +111,9 @@ export const Currencies = ({ simplified }) => {
             </Link>
 
         )
-    })
+    }) : []
     // ----------------------------
+
 
 
 
@@ -123,7 +126,7 @@ export const Currencies = ({ simplified }) => {
                 <div className="searchHolder" >
                     <input type="text" placeholder="Search Coin" className="search" onChange={handleChange} style={{ display: value.display ? value.display : "block" }} />
                 </div>
-                {cryptosListAfterSearch.length != 0 ? renderList : <p>Loading...</p>}
+                {cryptosListAfterSearch.length !== 0 ? renderList : <p>Loading...</p>}
             </div>
         </>
     )

@@ -16,8 +16,11 @@ import NewsApi from "../../API/NewsApi"
 
 
 export const Home = () => {
+
     const dispatch = useDispatch()
     const [simplified, setSimplified] = useState(true)
+
+
 
 
     //__DISPATCH DEFAULT VALUES ACTION
@@ -33,7 +36,7 @@ export const Home = () => {
 
 
     // -----------------------------------------------------------------------------------
-    // ___Sending Data (Stats and Coins) To Store || Dispatch
+    // ___Sending Request to API then Data (Stats and Coins) To Store (through dispatch)
     useEffect(() => {
         const fetchData = async () => {
             const Obj = await API(values.limit ? values.limit : 10)

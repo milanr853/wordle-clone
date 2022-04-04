@@ -3,7 +3,8 @@ import moment from "moment"
 import NewsApi from "../../API/NewsApi"
 import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { getNewsData_Action,getNewsUpdatedValues_Actions, getUpdatedValues_Actions } from "../../Redux/Actions/Actions"
+import { getCoinsAndStats_Action, getNewsData_Action,getNewsUpdatedValues_Actions } from "../../Redux/Actions/Actions"
+import API from "../../API/API"
 
 
 
@@ -22,6 +23,8 @@ export const News = ({ simplified }) => {
 
 
 
+
+
     // -----------------------------------------------------------------------------------
     // ___Sending News Data Array To Store || Dispatch
     useEffect(() => {
@@ -34,10 +37,9 @@ export const News = ({ simplified }) => {
     // ___Receiving Data (Stats and Coins) from Store || Selector
     const NewsArray = useSelector((store) => store.getNewsData_Reducer)
     // ----------------------------
-
     // ----------------------------
     //___RenderList Creation || MAP of News
-    const renderList = NewsArray.map((news) => {
+    const renderList = NewsArray ? NewsArray.map((news) => {
 
 
         const { name, datePublished, description, image, provider } = news
@@ -67,7 +69,7 @@ export const News = ({ simplified }) => {
                 </div>
             </div>
         )
-    })
+    }) : []
     // -----------------------------------------------------------------------------------
 
 
@@ -75,23 +77,30 @@ export const News = ({ simplified }) => {
 
 
     // -----------------------------------------------------------------------------------
+    //Sending request for crypto data
+    useEffect(()=>{
+        const fetchData = async ()=>{
+            const response = await API(100)
+            dispatch(getCoinsAndStats_Action(response))
+        } 
+        fetchData()
+    },[])
     //Getting Original Data Array From Store
     const cryptosArr = useSelector((store) => store.getCoinsAndStats_Reducer.coins)
 
-
     //Mapping only the name (of all currencies)
-    const coinOptions = cryptosArr.map((currency) => currency.name)
+    const coinOptions = cryptosArr ? cryptosArr.map((currency) => currency.name) : []
     // ----------------------------
-
     // ----------------------------
     //Rendering Options List ||  MAP of currency names
-    const renderOptions = coinOptions.map(coin => {
+    const renderOptions = coinOptions ? coinOptions.map(coin => {
         return (
             <option value={coin} key={coin}>{coin}</option>
         )
     }
-    )
+    ) : []
     // -----------------------------------------------------------------------------------
+
 
 
 
@@ -114,11 +123,11 @@ export const News = ({ simplified }) => {
                 <div className="newsSearchHolder">
                     <select name="select" className="select" onChange={handleChange} style={{ display: newsValues.display ? newsValues.display : "block" }}>
                         <option value="Cryptocurrency">Cryptocurrency</option>
-                        {cryptosArr && coinOptions.length != 0 ? renderOptions : <></>}
+                        {cryptosArr || coinOptions.length !== 0 ? renderOptions : <></>}
                     </select>
                 </div>
                 {
-                    NewsArray && NewsArray.length != 0 ? renderList : <h1>Loading...</h1>
+                    NewsArray && NewsArray.length !== 0 ? renderList : <h1>Loading...</h1>
                 }
             </div>
         </>
