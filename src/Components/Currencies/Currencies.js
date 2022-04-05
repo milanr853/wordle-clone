@@ -153,10 +153,10 @@ export const Currencies = ({ simplified }) => {
         <div className="currenciesParentWrapperContainer">
             {/* <h1>Crypto Currencies</h1> */}
             <div className="searchHolder" >
-                <input type="text" placeholder="Search Coin" className="search" onChange={handleChange} style={{ display: value.display ? value.display : "block" }} />
+                {cryptosListAfterSearch.length !== 0 ? <input type="text" placeholder="Search Coin" className="search" onChange={handleChange} style={{ display: value.display ? value.display : "block" }} />:<></>}
             </div>
             <div className="coinsGrid">
-                {cryptosListAfterSearch.length !== 0 ? renderList : <p>Loading...</p>}
+                {cryptosListAfterSearch.length !== 0 ? renderList : <h2 className="loading">Loading...</h2>}
             </div>
         </div>
     )

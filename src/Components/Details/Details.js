@@ -9,8 +9,6 @@ import CoinApi from "../../API/Coin"
 import HTMLReactParser from 'html-react-parser';
 import { useSelector } from "react-redux"
 
-import { LineChart } from "../LineChart/LineChart"
-
 
 export const Details = () => {
 
@@ -34,11 +32,13 @@ export const Details = () => {
     useEffect(() => {
         const parentWrapper = document.querySelector('.parentWrapper')
         const DetailsWrapper_PARENT = document.querySelector('.DetailsWrapper_PARENT')
-        const links = document.querySelector('.links')
+        const links = document.querySelectorAll('.extradata a')
         if (colorMode === 'dark') {
             if (parentWrapper) parentWrapper.style.backgroundColor = "#3C415C"
             if (DetailsWrapper_PARENT) DetailsWrapper_PARENT.style.color = "white"
-            if (links) links.style.color = "white"
+            links.forEach((link)=>{
+                link.style.color = "yellow"
+            })
         }
         else {
             if (parentWrapper) {
@@ -50,8 +50,10 @@ export const Details = () => {
                 DetailsWrapper_PARENT.style.color = "black"
             }
             if (links) {
-                links.style.transition = "0.7s"
-                links.style.color = "dodgerblue"
+                links.forEach((link)=>{
+                    link.style.transition = "0.7s"
+                    link.style.color = "dodgerblue"
+                })
             }
         }
 
@@ -117,9 +119,9 @@ export const Details = () => {
                             </div>
                         </div>
 
-                            <div className="chartParentWrapperContainer">
+                            {/* <div className="chartParentWrapperContainer">
                                 <LineChart price={Currency.price} name={Currency.name} id={Currency.id}/>
-                            </div>
+                            </div> */}
 
                         <div className="extradata">
                             <h3 className="whatis">What is {Currency.name}?</h3>
@@ -128,7 +130,7 @@ export const Details = () => {
                         </div>
 
                     </div>
-                    : <h1>Loading...</h1>
+                    : <h2 className="loading">Loading...</h2>
             }
         </>
     )

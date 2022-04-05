@@ -144,7 +144,7 @@ export const Home = () => {
                         </div>
                         {/* <News simplified={simplified} /> */}
                     </div>
-                    : <h1 className="firstHeading">Loading...</h1>
+                    : <h2 className="loading">Loading...</h2>
             }
         </>
     )

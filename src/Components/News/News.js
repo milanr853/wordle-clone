@@ -156,7 +156,7 @@ export const News = ({ simplified }) => {
             </div>
             <div className="newsContainer">
                 {
-                    NewsArray && NewsArray.length !== 0 ? renderList : <h1>Loading...</h1>
+                    NewsArray && NewsArray.length !== 0 ? renderList : <h2 className="loading">Loading...</h2>
                 }
             </div>
         </div>
