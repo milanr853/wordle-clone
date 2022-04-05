@@ -1,13 +1,22 @@
+/*GRID-ITEM:  background-color: white; */
+
+
+
+.currenciesParentWrapperContainer{
+    width: 100%;
+}
+
+
 .coinsGrid{
     display: grid;
     grid-template-columns: repeat(4,1fr);
     grid-gap: 4px;
-    grid-template-rows: repeat(1,80px);
+    /* grid-template-rows: repeat(1,80px); */
     grid-auto-rows: 270px;
 }
 
 .coinGridItem{
-    background-color: white;
+    /* background-color: white; */
     border-radius: 3px;
     display: flex;
     flex-direction: column;
@@ -57,17 +66,38 @@
     justify-content: space-around;
 }
 
-.searchHolder{
-    grid-column-start: 1;
-    grid-column-end: 5;
-}
+
 
 .search{
-    width: 25%;
+    width:310px;
     border: none;
     height: 40px;
     box-sizing: border-box;
     padding: 0 10px;
     font-size: 16px;
     border-radius: 3px;
+    margin-bottom: 50px;
+}
+
+
+/* -------------------- */
+
+
+@media screen and (max-width: 1150px) {
+    .coinsGrid{
+        grid-template-columns: repeat(3,1fr);
+
+    }
+}
+@media screen and (max-width: 900px) {
+    .coinsGrid{
+        grid-template-columns: repeat(2,1fr);
+
+    }
+}
+@media screen and (max-width: 500px) {
+    .coinsGrid{
+        grid-template-columns: repeat(1,1fr);
+
+    }
 }

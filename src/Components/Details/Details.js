@@ -7,8 +7,14 @@ import { millify } from "millify"
 
 import CoinApi from "../../API/Coin"
 import HTMLReactParser from 'html-react-parser';
+import { useSelector } from "react-redux"
 
 export const Details = () => {
+
+    const colorMode = useSelector(store => store.changeColorReducer)
+
+
+
     const [Currency, setCurrency] = useState({})
     const { id } = useParams()
 
@@ -21,7 +27,37 @@ export const Details = () => {
     }, [])
 
 
-// ------------------------------------------------------------
+
+    useEffect(() => {
+        const parentWrapper = document.querySelector('.parentWrapper')
+        const DetailsWrapper_PARENT = document.querySelector('.DetailsWrapper_PARENT')
+        const links = document.querySelector('.links')
+        if (colorMode === 'dark') {
+            if (parentWrapper) parentWrapper.style.backgroundColor = "#3C415C"
+            if (DetailsWrapper_PARENT) DetailsWrapper_PARENT.style.color = "white"
+            if (links) links.style.color = "white"
+        }
+        else {
+            if (parentWrapper) {
+                parentWrapper.style.transition = "0.7s"
+                parentWrapper.style.backgroundColor = "white"
+            }
+            if (DetailsWrapper_PARENT) {
+                DetailsWrapper_PARENT.style.transition = "0.7s"
+                DetailsWrapper_PARENT.style.color = "black"
+            }
+            if (links) {
+                links.style.transition = "0.7s"
+                links.style.color = "dodgerblue"
+            }
+        }
+
+
+    }, [Currency,colorMode])
+
+
+
+    // ------------------------------------------------------------
 
 
 
@@ -29,7 +65,7 @@ export const Details = () => {
         <>
             {
                 Currency.uuid ?
-                    <>
+                    <div className="DetailsWrapper_PARENT">
                         {/* <h1>BTC Price</h1> */}
 
                         <div className="parentWrapper">
@@ -85,7 +121,7 @@ export const Details = () => {
                             <a href={Currency.websiteUrl} className="links">{Currency.name}</a>
                         </div>
 
-                    </>
+                    </div>
                     : <h1>Loading...</h1>
             }
         </>

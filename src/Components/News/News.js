@@ -3,12 +3,21 @@ import moment from "moment"
 import NewsApi from "../../API/NewsApi"
 import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { getCoinsAndStats_Action, getNewsData_Action,getNewsUpdatedValues_Actions } from "../../Redux/Actions/Actions"
+import { getCoinsAndStats_Action, getNewsData_Action, getNewsUpdatedValues_Actions } from "../../Redux/Actions/Actions"
 import API from "../../API/API"
 
 
 
 export const News = ({ simplified }) => {
+
+    const colorMode = useSelector(store => store.changeColorReducer)
+
+
+
+
+
+
+
     const dispatch = useDispatch()
 
 
@@ -78,13 +87,13 @@ export const News = ({ simplified }) => {
 
     // -----------------------------------------------------------------------------------
     //Sending request for crypto data
-    useEffect(()=>{
-        const fetchData = async ()=>{
+    useEffect(() => {
+        const fetchData = async () => {
             const response = await API(100)
             dispatch(getCoinsAndStats_Action(response))
-        } 
+        }
         fetchData()
-    },[])
+    }, [])
     //Getting Original Data Array From Store
     const cryptosArr = useSelector((store) => store.getCoinsAndStats_Reducer.coins)
 
@@ -103,6 +112,26 @@ export const News = ({ simplified }) => {
 
 
 
+    useEffect(() => {
+        const newsWrapper = document.querySelectorAll('.newsWrapper')
+        if (colorMode === "dark") {
+            newsWrapper.forEach((item) => {
+                item.style.transition = "0.7s"
+                item.style.backgroundColor = "#3C415C"
+                item.style.color = "white"
+            })
+        }
+        else {
+            newsWrapper.forEach((item) => {
+                item.style.transition = "0.7s"
+                item.style.backgroundColor = "white"
+                item.style.color = "black"
+            })
+        }
+    }, [NewsArray, colorMode])
+
+
+
 
 
     // ____________EVENT HANDLERS____________
@@ -117,19 +146,19 @@ export const News = ({ simplified }) => {
 
     // -----------------------------------------------------------------------------------
     return (
-        <>
+        <div className="newsParentWrapperContainer">
             {/* <h1>News</h1> */}
+            <div className="newsSearchHolder">
+                <select name="select" className="select" onChange={handleChange} style={{ display: newsValues.display ? newsValues.display : "block" }}>
+                    <option value="Cryptocurrency">Cryptocurrency</option>
+                    {cryptosArr || coinOptions.length !== 0 ? renderOptions : <></>}
+                </select>
+            </div>
             <div className="newsContainer">
-                <div className="newsSearchHolder">
-                    <select name="select" className="select" onChange={handleChange} style={{ display: newsValues.display ? newsValues.display : "block" }}>
-                        <option value="Cryptocurrency">Cryptocurrency</option>
-                        {cryptosArr || coinOptions.length !== 0 ? renderOptions : <></>}
-                    </select>
-                </div>
                 {
                     NewsArray && NewsArray.length !== 0 ? renderList : <h1>Loading...</h1>
                 }
             </div>
-        </>
+        </div>
     )
 }

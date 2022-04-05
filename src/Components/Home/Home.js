@@ -17,6 +17,11 @@ import NewsApi from "../../API/NewsApi"
 
 export const Home = () => {
 
+    const colorMode = useSelector(store => store.changeColorReducer)
+
+
+
+
     const dispatch = useDispatch()
     const [simplified, setSimplified] = useState(true)
 
@@ -30,7 +35,7 @@ export const Home = () => {
     }, [])
     //__GETTING VALUES FROM STORE
     const values = useSelector(store => store.displayCryptosOverPage_Reducer)
-    const newsValues = useSelector(store => store.displayNewsOverPage_Reducer)
+    // const newsValues = useSelector(store => store.displayNewsOverPage_Reducer)
 
 
 
@@ -41,8 +46,8 @@ export const Home = () => {
         const fetchData = async () => {
             const Obj = await API(values.limit ? values.limit : 10)
             dispatch(getCoinsAndStats_Action(Obj))
-            const response = await NewsApi("Cryptocurrency", newsValues.count && newsValues.count <= 3 ? newsValues.count : 3)
-            dispatch(getNewsData_Action(response))
+            // const response = await NewsApi("Cryptocurrency", newsValues.count && newsValues.count <= 3 ? newsValues.count : 3)
+            // dispatch(getNewsData_Action(response))
         }
         fetchData()
     }, [values])
@@ -65,12 +70,40 @@ export const Home = () => {
 
 
 
+    useEffect(() => {
+        const homeParentWrapper = document.querySelectorAll('.homeParentWrapper')
+        const Links = document.querySelectorAll('.showMore')
+        if (colorMode === 'dark') {
+
+            homeParentWrapper.forEach((item) => {
+                item.style.color = "white"
+            })
+            Links.forEach((link) => {
+                link.style.color = "white"
+            })
+        }
+        else{
+
+            homeParentWrapper.forEach((item) => {
+                item.style.color = "black"
+                item.style.transition = "0.7s"
+            })
+            Links.forEach((link) => {
+                link.style.transition = "0.7s"
+                link.style.color = "dodgerblue"
+            })
+        }
+    }, [statsObj,colorMode])
+
+
+
+
     // -----------------------------------------------------------------------------------
     return (
         <>
             {
                 statsObj ?
-                    <>
+                    <div className="homeParentWrapperContainer">
                         <div className="home">
                             <div className="homeFirstSectionWrapper">
                                 <h1 className="firstHeading">Global Crypto Stats</h1>
@@ -99,17 +132,18 @@ export const Home = () => {
                             </div>
                         </div>
 
-                        <div style={{ display: "flex", width: "100%", justifyContent: "space-between" }}>
-                            <h2>Top 10 Crypto Currencies in the World</h2>
-                            <Link to='/currencies' onClick={showMoreCurrencies}>Show More</Link>
+                        <div style={{ display: "flex", width: "100%", justifyContent: "space-between", alignItems: "center" }} className="sectionDivider">
+                            <h2 className="sectionDividerHeading">Top 10 Crypto Currencies in the World</h2>
+                            <Link to='/currencies' onClick={showMoreCurrencies} className='showMore'>Show More</Link>
                         </div>
                         <Currencies simplified={simplified} />
-                        <div style={{ display: "flex", width: "100%", justifyContent: "space-between" }}>
-                            <h2>Latest Crypto News around the world</h2>
-                            <Link to='/news' onClick={showMoreNews}>Show More</Link>
+
+                        <div style={{ display: "flex", width: "100%", justifyContent: "space-between", alignItems: "center" }} className="sectionDivider">
+                            <h2 className="sectionDividerHeading">Latest Crypto News around the world</h2>
+                            <Link to='/news' onClick={showMoreNews} className='showMore'>Show More</Link>
                         </div>
-                        <News simplified={simplified} />
-                    </>
+                        {/* <News simplified={simplified} /> */}
+                    </div>
                     : <h1 className="firstHeading">Loading...</h1>
             }
         </>

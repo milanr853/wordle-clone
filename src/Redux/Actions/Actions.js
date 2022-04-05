@@ -76,3 +76,15 @@ export const getNewsDefault_Action = ()=>{
 
 
 
+export const changeToLight = ()=>{
+    const CHANGE_TO_LIGHT = "CHANGE_TO_LIGHT"
+    return {
+        type: CHANGE_TO_LIGHT
+    }
+}
+export const changeToDark = ()=>{
+    const CHANGE_TO_DARK = "CHANGE_TO_DARK"
+    return {
+        type: CHANGE_TO_DARK
+    }
+}

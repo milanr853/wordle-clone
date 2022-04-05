@@ -1,3 +1,15 @@
+/* ParentWrapper: background-color: white; */
+
+
+
+
+.DetailsWrapper_PARENT{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+
 .iconholder{
     width: 125px;
     height: 125px;
@@ -16,7 +28,7 @@
     flex-direction: column;
     min-height: calc(100vh - 40px);
     justify-content: space-around;
-    background-color: white;
+    /* background-color: white; */
     padding: 0 100px;
 }
 
@@ -33,7 +45,7 @@
 }
 
 .middleWrapper{
-    /* min-height: 250px; */
+    /* height: 150px; */
     width: 100%;
     /* background-color:bisque; */
     display: flex;
@@ -45,6 +57,7 @@
 height: 400px;
 width: 300px;
 display: flex;
+/* background-color: antiquewhite; */
 /* padding-bottom: 40px; */
 }
 
@@ -77,4 +90,59 @@ display: flex;
 
 .extradata p{
     margin-bottom: 20px;
+}
+
+
+
+@media screen and (max-width:1150px){
+    .middleWrapper{
+        flex-direction: column;
+        align-items: center;
+        
+    }
+    .middleLeft,.middleRight{
+        width: 450px;
+    }
+}
+
+
+@media screen and (max-width:950px) {
+    .DetailsWrapper_PARENT{
+        width: 70%;
+    }
+}
+
+
+
+@media screen and (max-width:800px) {
+    .DetailsWrapper_PARENT{
+        width: 100%;
+    }
+    .middleWrapper{
+        flex-direction: row;
+        
+    }
+    .parentWrapper{
+        padding: 0 50px;
+    }
+    .middleLeft,.middleRight{
+        width: 250px;
+    }
+}
+
+@media screen and (max-width: 750px) {
+    .middleWrapper{
+        flex-direction: column;
+        align-items: center;
+        
+    }
+    .middleLeft,.middleRight{
+        width: 350px;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .middleLeft,.middleRight{
+        width: 250px;
+    }
 }

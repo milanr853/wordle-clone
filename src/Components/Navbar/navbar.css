@@ -1,23 +1,30 @@
+/*NAVBAR CONTAINER:  background-color: #161853; */
+ /*LOGO:  color: #1893da; */ 
+
+
+
 .navbar{
     width: 250px;
     height: 100vh;
-    background-color: #161853;
+    /* background-color: #161853; */
 
     position: fixed;
     top: 0;
     left: 0;
     user-select: none;
+    z-index: 88;
 
 }
 
 .logoHolder{
     width: 100%;
-    color: #1893da;
+    /* color: #1893da; */
     font-size: 18px;
     display: flex;
     justify-content: center;
     align-items: center;
     /* cursor: pointer; */
+    /* background:red */
 }
 
 .divider{
@@ -27,6 +34,7 @@
 }
 
 .menuOptions{
+    /* background:black; */
     list-style: none;
     font-size: 16px;
 
@@ -45,3 +53,72 @@
     align-items: center;
 }
 
+
+
+@media screen and (max-width: 800px) {
+    .navbar{
+        width: 100vw;
+        height: 100px;
+        box-sizing: border-box;
+        padding: 20px;
+        /* position: relative; */
+
+    }
+    .divider{
+        display: none;
+    }
+    .menuOptions{
+        flex-direction: row;
+        width: 60%;
+        height: 100%;
+        align-items: center;
+        box-sizing: border-box;
+        /* padding: 0 20px; */
+    }
+    .wrapper{
+        height: 100%;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+    .logoHolder{
+        width: 30%;
+        justify-content: flex-start;
+        /* box-sizing: border-box; */
+        /* padding: 0 20px */
+    }
+}
+
+
+
+@media screen and (max-width:750px) {
+    .navOptions{
+        font-size: 12px;
+    }
+    .navLogo{
+        font-size: 28px;
+    }
+}
+
+
+
+@media screen and (max-width:500px) {
+    .navbar{
+        padding: 14px;
+    }
+
+    .navLogo{
+        font-size: 18px;
+    }
+    .menuOptions{
+        width: 100%;
+        align-items: flex-end;
+    }
+    .wrapper{
+        flex-direction: column;
+        align-items: flex-end;
+    }
+    .logoHolder{
+        width: 100%;
+        justify-content: center;
+    }
+}

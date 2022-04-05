@@ -11,11 +11,17 @@ import { getCoinsAndStats_Action, getUpdatedValues_Actions } from "../../Redux/A
 
 export const Currencies = ({ simplified }) => {
 
+    const colorMode = useSelector(store => store.changeColorReducer)
+
+
+
+
+
     const dispatch = useDispatch()
-// ____________STATES____________
+    // ____________STATES____________
     const [searchTerm, setSearchTerm] = useState("")
     const [cryptosListAfterSearch, setCryptos] = useState([])
-// ----------------------------
+    // ----------------------------
 
 
 
@@ -59,7 +65,7 @@ export const Currencies = ({ simplified }) => {
     // ----------------------------
     //___setting up of available currencies (to render them)
     useEffect(() => {
-        setCryptos(cryptosArr?[...cryptosArr]:[])
+        setCryptos(cryptosArr ? [...cryptosArr] : [])
     }, [cryptosArr])
 
     //filtering out all the currencies a/t the search term || then setting up the available currencies 
@@ -86,27 +92,51 @@ export const Currencies = ({ simplified }) => {
     // ----------------------------
 
 
+    useEffect(() => {
+        const grid = document.querySelectorAll('.coinGridItem')
+        const coinStatsValues = document.querySelectorAll('.coinStatsValues')
+        if (colorMode === "dark") {
+
+            grid.forEach((item) => {
+                item.style.backgroundColor = "#3C415C"
+            })
+            coinStatsValues.forEach((item) => {
+                item.style.color = "white"
+            })
+        }
+        else {
+
+            grid.forEach((item) => {
+                item.style.transition = "0.7s"
+                item.style.backgroundColor = "white"
+            })
+            coinStatsValues.forEach((item) => {
+                item.style.transition = "0.7s"
+                item.style.color = "black"
+            })
+        }
+    }, [cryptosListAfterSearch,colorMode])
 
 
 
     // ____________RENDERING LIST OF FILTERED CURRENCIES || MAP____________
-    const renderList = cryptosListAfterSearch?cryptosListAfterSearch.map((currency) => {
+    const renderList = cryptosListAfterSearch ? cryptosListAfterSearch.map((currency) => {
         const { uuid, symbol, name, change, iconUrl, marketCap, price, rank } = currency
 
         return (
 
             <Link to={`/currency/details/${uuid}`} className="coinGridItem" key={uuid}>
                 <div className="coinHolder">
-                    <strong className="coinTitle">{rank}. {name}</strong>
+                    <strong className="coinTitle coinStatsValues">{rank}. {name}</strong>
                     <div className="coinIcon">
                         <img src={iconUrl} alt={symbol} />
                     </div>
                 </div>
                 <div className="c-divider"></div>
                 <div className="coindetails">
-                    <p>Price: {millify(price)}</p>
-                    <p>Market Cap: {millify(marketCap)}</p>
-                    <p>Daily Change: {millify(change)}</p>
+                    <p className="coinStatsValues">Price: {millify(price)}</p>
+                    <p className="coinStatsValues">Market Cap: {millify(marketCap)}</p>
+                    <p className="coinStatsValues">Daily Change: {millify(change)}</p>
                 </div>
             </Link>
 
@@ -120,14 +150,14 @@ export const Currencies = ({ simplified }) => {
 
     // ------------------------------------------
     return (
-        <>
+        <div className="currenciesParentWrapperContainer">
             {/* <h1>Crypto Currencies</h1> */}
+            <div className="searchHolder" >
+                <input type="text" placeholder="Search Coin" className="search" onChange={handleChange} style={{ display: value.display ? value.display : "block" }} />
+            </div>
             <div className="coinsGrid">
-                <div className="searchHolder" >
-                    <input type="text" placeholder="Search Coin" className="search" onChange={handleChange} style={{ display: value.display ? value.display : "block" }} />
-                </div>
                 {cryptosListAfterSearch.length !== 0 ? renderList : <p>Loading...</p>}
             </div>
-        </>
+        </div>
     )
 }

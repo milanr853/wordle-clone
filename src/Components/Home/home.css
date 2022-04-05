@@ -1,7 +1,9 @@
+.homeParentWrapperContainer{
+    width: 100%;
+}
+
 .home{
     width: 100%;
-    min-height: calc(100vh - 40px);
-    background: #e2e8f0;
 }
 
 .grid{
@@ -12,7 +14,7 @@
     grid-row-gap:50px ;
     grid-column-gap:25px ;
 
-    margin: 25px 0;
+    /* margin: 25px 0; */
 }
 .gridItem{
     display: flex;
@@ -30,9 +32,39 @@
 
 .firstHeading{
     font-weight: 400;
+    margin-bottom: 20px;
 }
 
-/* .homeFirstSectionWrapper{
-    background-color: beige;
 
-} */
+
+.sectionDivider{
+    margin: 40px 0;
+}
+
+@media screen and (max-width:750px) {
+    .sectionDivider{
+        font-size: 14px;
+    }
+    .firstHeading{
+        font-size: 26px;
+    }
+    .itemValue{
+        font-size: 22px;
+    }
+    .itemTitle{
+        font-size: 15px;
+    }
+}
+
+@media screen and (max-width:400px) {
+    .firstHeading{
+        font-size: 25px;
+    }
+    .itemTitle{
+        font-size: 13px;
+    }
+}
+
+.sectionDividerHeading{
+    width: 70%;
+}

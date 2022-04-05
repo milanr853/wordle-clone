@@ -48,3 +48,13 @@ return state
 //     }
 //     else return state
 // }
+
+export const changeColorReducer = (state='dark',{type})=>{
+    if(type==="CHANGE_TO_LIGHT"){
+        return "light"
+    }
+    else if(type==="CHANGE_TO_DARK"){
+        return "dark"
+    }
+    else return state
+}
