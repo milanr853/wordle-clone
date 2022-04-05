@@ -9,6 +9,9 @@ import CoinApi from "../../API/Coin"
 import HTMLReactParser from 'html-react-parser';
 import { useSelector } from "react-redux"
 
+import { LineChart } from "../LineChart/LineChart"
+
+
 export const Details = () => {
 
     const colorMode = useSelector(store => store.changeColorReducer)
@@ -114,6 +117,9 @@ export const Details = () => {
                             </div>
                         </div>
 
+                            <div className="chartParentWrapperContainer">
+                                <LineChart price={Currency.price} name={Currency.name} id={Currency.id}/>
+                            </div>
 
                         <div className="extradata">
                             <h3 className="whatis">What is {Currency.name}?</h3>

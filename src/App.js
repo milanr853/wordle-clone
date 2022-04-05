@@ -32,9 +32,7 @@ function App() {
       if (app) app.style.backgroundColor = "#726A95"
 
       button.style.margin = "0"
-      button.style.transition = "0.7s"
       button.style.backgroundColor = "rgb(224, 224, 171)"
-      buttonHolder.style.transition = "0.7s"
       buttonHolder.style.backgroundColor = "#402445"
 
     }
