@@ -71,7 +71,7 @@ export const Home = () => {
 
 
     useEffect(() => {
-        const homeParentWrapper = document.querySelectorAll('.homeParentWrapper')
+        const homeParentWrapper = document.querySelectorAll('.homeParentWrapperContainer')
         const Links = document.querySelectorAll('.showMore')
         if (colorMode === 'dark') {
 

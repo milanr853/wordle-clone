@@ -47,7 +47,7 @@ function App() {
       button.style.transition = "0.7s"
       button.style.backgroundColor = "#351F39"
       buttonHolder.style.transition = "0.7s"
-      buttonHolder.style.backgroundColor = "#719FB0"
+      buttonHolder.style.backgroundColor = "#C7B198"
     }
 
   }, [colorMode])
