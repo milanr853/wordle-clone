@@ -118,7 +118,7 @@ export const Navbar = () => {
             <div className="navbar">
                 <div className="wrapper">
                     <div className="logoHolder">
-                        <i class="bi bi-list" onClick={generateHamBar}></i>
+                        <i className="bi bi-list" onClick={generateHamBar}></i>
                         <h1 className="navLogo">Cryptoverse</h1>
                     </div>
                     <div className="divider"></div>

@@ -2,62 +2,30 @@ import "./currency.css"
 import { millify } from "millify"
 import { useEffect } from "react"
 import { Link } from "react-router-dom"
-import { useDispatch, useSelector } from "react-redux"
+import { useSelector } from "react-redux"
 import { useState } from "react"
-import API from "../../API/API"
-import { getCoinsAndStats_Action, getUpdatedValues_Actions } from "../../Redux/Actions/Actions"
 
 
 
-export const Currencies = ({ simplified }) => {
+
+
+export const Currencies = ({Limited}) => {
 
     const colorMode = useSelector(store => store.changeColorReducer)
 
 
 
 
+    const cryptosArr = useSelector((store) => store.getCoinsAndStats_Reducer.coins)
+    // ----------------------------
 
-    const dispatch = useDispatch()
+
+
+
     // ____________STATES____________
     const [searchTerm, setSearchTerm] = useState("")
     const [cryptosListAfterSearch, setCryptos] = useState([])
     // ----------------------------
-
-
-
-
-    //__GETTING VALUES FROM STORE
-    const value = useSelector(store => store.displayCryptosOverPage_Reducer)
-
-
-
-
-    // ----------------------------
-    // SETTING NEW VALUES Condition
-    useEffect(() => {
-        if (!simplified) {
-            dispatch(getUpdatedValues_Actions())
-        }
-    }, [])
-    // ----------------------------
-
-
-
-
-
-    // ----------------------------
-    // ___Sending Data (Stats and Coins) To Store || Dispatch
-    useEffect(() => {
-        const fetchData = async () => {
-            const Obj = await API(value.limit ? value.limit : 100)
-            dispatch(getCoinsAndStats_Action(Obj))
-        }
-        fetchData()
-    }, [value])
-    // ___Receiving Data (Stats and Coins) from Store || Selector
-    const cryptosArr = useSelector((store) => store.getCoinsAndStats_Reducer.coins)
-    // ----------------------------
-
 
 
 
@@ -119,35 +87,63 @@ export const Currencies = ({ simplified }) => {
                 item.style.color = "black"
             })
         }
-    }, [cryptosListAfterSearch,colorMode])
-        // ----------------------------
-        // ----------------------------
+    }, [cryptosListAfterSearch, colorMode])
+    // ----------------------------
+    // ----------------------------
 
 
 
     // ____________RENDERING LIST OF FILTERED CURRENCIES || MAP____________
-    const renderList = cryptosListAfterSearch ? cryptosListAfterSearch.map((currency) => {
-        const { uuid, symbol, name, change, iconUrl, marketCap, price, rank } = currency
+    const limitedItems = cryptosListAfterSearch ? cryptosListAfterSearch.filter((currency) => {
+        if (currency.rank <= 10) return currency
+    })
+        : []
 
-        return (
 
-            <Link to={`/currency/details/${uuid}`} className="coinGridItem" key={uuid}>
-                <div className="coinHolder">
-                    <strong className="coinTitle coinStatsValues">{rank}. {name}</strong>
-                    <div className="coinIcon">
-                        <img src={iconUrl} alt={symbol} />
-                    </div>
-                </div>
-                <div className="c-divider"></div>
-                <div className="coindetails">
-                    <p className="coinStatsValues">Price: {millify(price)}</p>
-                    <p className="coinStatsValues">Market Cap: {millify(marketCap)}</p>
-                    <p className="coinStatsValues">Daily Change: {millify(change)}</p>
-                </div>
-            </Link>
 
-        )
-    }) : []
+    const renderList =
+        Limited ?
+
+            limitedItems.length != 0 ? limitedItems.map((currency) => {
+                return (
+                    <Link to={`/currency/details/${currency.uuid}`} className="coinGridItem" key={currency.uuid}>
+                        <div className="coinHolder">
+                            <strong className="coinTitle coinStatsValues">{currency.rank}. {currency.name}</strong>
+                            <div className="coinIcon">
+                                <img src={currency.iconUrl} alt={currency.symbol} />
+                            </div>
+                        </div>
+                        <div className="c-divider"></div>
+                        <div className="coindetails">
+                            <p className="coinStatsValues">Price: {millify(currency.price)}</p>
+                            <p className="coinStatsValues">Market Cap: {millify(currency.marketCap)}</p>
+                            <p className="coinStatsValues">Daily Change: {millify(currency.change)}</p>
+                        </div>
+                    </Link>
+                )
+
+            }) : []
+
+            :
+            cryptosListAfterSearch.length != 0 ? cryptosListAfterSearch.map((currency) => {
+                return (
+                    <Link to={`/currency/details/${currency.uuid}`} className="coinGridItem" key={currency.uuid}>
+                        <div className="coinHolder">
+                            <strong className="coinTitle coinStatsValues">{currency.rank}. {currency.name}</strong>
+                            <div className="coinIcon">
+                                <img src={currency.iconUrl} alt={currency.symbol} />
+                            </div>
+                        </div>
+                        <div className="c-divider"></div>
+                        <div className="coindetails">
+                            <p className="coinStatsValues">Price: {millify(currency.price)}</p>
+                            <p className="coinStatsValues">Market Cap: {millify(currency.marketCap)}</p>
+                            <p className="coinStatsValues">Daily Change: {millify(currency.change)}</p>
+                        </div>
+                    </Link>
+                )
+
+            }) : []
     // ----------------------------
 
 
@@ -159,7 +155,7 @@ export const Currencies = ({ simplified }) => {
         <div className="currenciesParentWrapperContainer">
             {/* <h1>Crypto Currencies</h1> */}
             <div className="searchHolder" >
-                {cryptosListAfterSearch.length !== 0 ? <input type="text" placeholder="Search Coin" className="search" onChange={handleChange} style={{ display: value.display ? value.display : "block" }} />:<></>}
+                {cryptosListAfterSearch.length !== 0 ? <input type="text" placeholder="Search Coin" className="search" onChange={handleChange} style={{ display: Limited? "none" : "block" }} /> : <></>}
             </div>
             <div className="coinsGrid">
                 {cryptosListAfterSearch.length !== 0 ? renderList : <h2 className="loading">Loading...</h2>}

@@ -18,12 +18,12 @@ import NewsApi from "../../API/NewsApi"
 export const Home = () => {
 
     const colorMode = useSelector(store => store.changeColorReducer)
-
+    
+    const [Limited,setLimited] = useState(true)
 
 
 
     const dispatch = useDispatch()
-    const [simplified, setSimplified] = useState(true)
 
 
 
@@ -31,11 +31,9 @@ export const Home = () => {
     //__DISPATCH DEFAULT VALUES ACTION
     useEffect(() => {
         dispatch(getDefaultValues_Action())
-        dispatch(getNewsDefault_Action())
     }, [])
     //__GETTING VALUES FROM STORE
     const values = useSelector(store => store.displayCryptosOverPage_Reducer)
-    // const newsValues = useSelector(store => store.displayNewsOverPage_Reducer)
 
 
 
@@ -44,30 +42,24 @@ export const Home = () => {
     // ___Sending Request to API then Data (Stats and Coins) To Store (through dispatch)
     useEffect(() => {
         const fetchData = async () => {
-            const Obj = await API(values.limit ? values.limit : 10)
+            const Obj = await API(100)
             dispatch(getCoinsAndStats_Action(Obj))
-            // const response = await NewsApi("Cryptocurrency", newsValues.count && newsValues.count <= 3 ? newsValues.count : 3)
-            // dispatch(getNewsData_Action(response))
         }
         fetchData()
     }, [values])
 
+
+
+const showMoreCurrencies = ()=>{
+    setLimited(false)
+}
+
+
+
+
     // ___Receiving Data (Stats and Coins) from Store || Selector
     const statsObj = useSelector((store) => store.getCoinsAndStats_Reducer.stats)
     // -----------------------------------------------------------------------------------
-
-
-
-
-    // ____________EVENT HANDLERS____________
-    const showMoreCurrencies = () => {
-        setSimplified(false)
-    }
-    const showMoreNews = async () => {
-        setSimplified(false)
-    }
-
-
 
     // ----------------------------
     // SETTING COLORS || DARK LIGHT MODE
@@ -98,8 +90,6 @@ export const Home = () => {
     }, [statsObj, colorMode])
     // ----------------------------
     // ----------------------------
-
-
 
     // -----------------------------------------------------------------------------------
     return (
@@ -137,15 +127,9 @@ export const Home = () => {
 
                         <div style={{ display: "flex", width: "100%", justifyContent: "space-between", alignItems: "center" }} className="sectionDivider">
                             <h2 className="sectionDividerHeading">Top 10 Crypto Currencies in the World</h2>
-                            <Link to='/currencies' onClick={showMoreCurrencies} className='showMore'>Show More</Link>
+                            <Link to='/currencies'  className='showMore' onClick={showMoreCurrencies}>Show More</Link>
                         </div>
-                        <Currencies simplified={simplified} />
-
-                        <div style={{ display: "flex", width: "100%", justifyContent: "space-between", alignItems: "center" }} className="sectionDivider">
-                            <h2 className="sectionDividerHeading">Latest Crypto News around the world</h2>
-                            <Link to='/news' onClick={showMoreNews} className='showMore'>Show More</Link>
-                        </div>
-                        {/* <News simplified={simplified} /> */}
+                        <Currencies Limited={Limited}/>
                     </div>
                     : <h2 className="loading">Loading...</h2>
             }
