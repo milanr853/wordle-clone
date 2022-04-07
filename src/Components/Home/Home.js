@@ -69,32 +69,35 @@ export const Home = () => {
 
 
 
-
+    // ----------------------------
+    // SETTING COLORS || DARK LIGHT MODE
     useEffect(() => {
         const homeParentWrapper = document.querySelectorAll('.homeParentWrapperContainer')
         const Links = document.querySelectorAll('.showMore')
-        if (colorMode === 'dark') {
 
+        if (colorMode === 'dark') {
             homeParentWrapper.forEach((item) => {
+                // item.style.transition = "0.7s"
                 item.style.color = "white"
             })
             Links.forEach((link) => {
+                // link.style.transition = "0.7s"
                 link.style.color = "white"
             })
         }
-        else{
-
+        else {
             homeParentWrapper.forEach((item) => {
-                item.style.color = "black"
                 item.style.transition = "0.7s"
+                item.style.color = "black"
             })
             Links.forEach((link) => {
                 link.style.transition = "0.7s"
                 link.style.color = "dodgerblue"
             })
         }
-    }, [statsObj,colorMode])
-
+    }, [statsObj, colorMode])
+    // ----------------------------
+    // ----------------------------
 
 
 

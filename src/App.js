@@ -19,7 +19,8 @@ function App() {
 
 
 
-
+    // ----------------------------
+    // SETTING HAM-BAR
   const colorMode = useSelector(store => store.changeColorReducer)
 
   useEffect(() => {
@@ -33,7 +34,7 @@ function App() {
 
       button.style.margin = "0"
       button.style.backgroundColor = "rgb(224, 224, 171)"
-      buttonHolder.style.backgroundColor = "#402445"
+      buttonHolder.style.backgroundColor = "#4a2b4f"
 
     }
     else {
@@ -43,9 +44,9 @@ function App() {
       }
             button.style.marginLeft = "62%"
       button.style.transition = "0.7s"
-      button.style.backgroundColor = "#351F39"
+      button.style.backgroundColor = "#1893da"
       buttonHolder.style.transition = "0.7s"
-      buttonHolder.style.backgroundColor = "#C7B198"
+      buttonHolder.style.backgroundColor = "#16206ff2"
     }
 
   }, [colorMode])
@@ -60,7 +61,8 @@ function App() {
 
   }
 
-
+  // SETTING HAM-BAR
+    // ----------------------------
 
 
 

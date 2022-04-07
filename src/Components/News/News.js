@@ -112,11 +112,14 @@ export const News = ({ simplified }) => {
 
 
 
+
+    // ----------------------------
+    // SETTING COLORS || DARK LIGHT MODE
     useEffect(() => {
         const newsWrapper = document.querySelectorAll('.newsWrapper')
         if (colorMode === "dark") {
             newsWrapper.forEach((item) => {
-                item.style.transition = "0.7s"
+                // item.style.transition = "0.7s"
                 item.style.backgroundColor = "#3C415C"
                 item.style.color = "white"
             })
@@ -129,7 +132,8 @@ export const News = ({ simplified }) => {
             })
         }
     }, [NewsArray, colorMode])
-
+    // ----------------------------
+    // ----------------------------
 
 
 

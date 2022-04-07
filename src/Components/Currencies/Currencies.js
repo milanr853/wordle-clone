@@ -92,20 +92,24 @@ export const Currencies = ({ simplified }) => {
     // ----------------------------
 
 
+
+    // ----------------------------
+    // SETTING COLORS || DARK LIGHT MODE
     useEffect(() => {
         const grid = document.querySelectorAll('.coinGridItem')
         const coinStatsValues = document.querySelectorAll('.coinStatsValues')
         if (colorMode === "dark") {
 
             grid.forEach((item) => {
+                // item.style.transition = "0.7s"
                 item.style.backgroundColor = "#3C415C"
             })
             coinStatsValues.forEach((item) => {
+                // item.style.transition = "0.7s"
                 item.style.color = "white"
             })
         }
         else {
-
             grid.forEach((item) => {
                 item.style.transition = "0.7s"
                 item.style.backgroundColor = "white"
@@ -116,6 +120,8 @@ export const Currencies = ({ simplified }) => {
             })
         }
     }, [cryptosListAfterSearch,colorMode])
+        // ----------------------------
+        // ----------------------------
 
 
 

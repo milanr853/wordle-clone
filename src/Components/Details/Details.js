@@ -29,14 +29,21 @@ export const Details = () => {
 
 
 
+    // ----------------------------
+    // SETTING COLORS || DARK LIGHT MODE
     useEffect(() => {
         const parentWrapper = document.querySelector('.parentWrapper')
         const DetailsWrapper_PARENT = document.querySelector('.DetailsWrapper_PARENT')
         const links = document.querySelectorAll('.extradata a')
         if (colorMode === 'dark') {
-            if (parentWrapper) parentWrapper.style.backgroundColor = "#3C415C"
-            if (DetailsWrapper_PARENT) DetailsWrapper_PARENT.style.color = "white"
+            if (parentWrapper) {
+                // parentWrapper.style.transition = "0.7s"
+                parentWrapper.style.backgroundColor = "#3C415C"}
+            if (DetailsWrapper_PARENT) {
+                // DetailsWrapper_PARENT.style.transition = "0.7s"
+                DetailsWrapper_PARENT.style.color = "white"}
             links.forEach((link)=>{
+                // link.style.transition = "0.7s"
                 link.style.color = "yellow"
             })
         }
@@ -56,9 +63,9 @@ export const Details = () => {
                 })
             }
         }
-
-
     }, [Currency,colorMode])
+    // ----------------------------
+    // SETTING COLORS || DARK LIGHT MODE
 
 
 
