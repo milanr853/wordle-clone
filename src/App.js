@@ -6,11 +6,11 @@ import { Exchanges } from "./Components/Exchange/Exchange"
 import { Currencies } from "./Components/Currencies/Currencies"
 import { Home } from "./Components/Home/Home"
 import { Details } from "./Components/Details/Details"
-import { changeColorMode, changeToDark, changeToLight } from './Redux/Actions/Actions';
+import Error from './Components/Error/Error';
+import { changeToDark, changeToLight } from './Redux/Actions/Actions';
 
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useEffect } from 'react';
-import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 function App() {
@@ -86,6 +86,7 @@ function App() {
           <Route path='/exchanges' element={<Exchanges />} />
           <Route path='/news' element={<News />} />
           <Route path='/currency/details/:id' element={<Details />} />
+          <Route path="*" element={<Error/>}/>
         </Routes>
       </div>
 

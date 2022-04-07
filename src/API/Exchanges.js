@@ -1,20 +1,20 @@
-// const ExchangeApi = () => {
+const ExchangeApi = () => {
 
-//     const fetch = require('node-fetch');
+    const fetch = require('node-fetch');
 
-//     const url = 'https://coinranking1.p.rapidapi.com/exchange/-zdvbieRdZ/markets?referenceCurrencyUuid=yhjMzLPhuIDl&limit=50&offset=0&orderBy=24hVolume&orderDirection=desc';
+    const url = `https://coinranking1.p.rapidapi.com/coins?referenceCurrencyUuid=yhjMzLPhuIDl&timePeriod=24h&tiers=1&orderBy=marketCap&orderDirection=desc&limit=50&offset=0&`;
 
-//     const options = {
-//         method: 'GET',
-//         headers: {
-//             'X-RapidAPI-Host': 'coinranking1.p.rapidapi.com',
-//             'X-RapidAPI-Key': 'b53c14d694msh5968aec0a3c160dp1a1726jsndacdc73fb180'
-//         }
-//     };
+    const options = {
+        method: 'GET',
+        headers: {
+            'X-RapidAPI-Host': 'coinranking1.p.rapidapi.com',
+            'X-RapidAPI-Key': '5dab99cddemsh08c8be8993cdf47p19b44ejsn41fcb2739301'
+        }
+    };
 
-//     return fetch(url, options)
-//         .then(res => res.json())
-//         .then(json => json)
-// }
+    return fetch(url, options)
+            .then(res => res.json())
+            .then(data => data.data)
+}
 
-// export default ExchangeApi
+export default ExchangeApi

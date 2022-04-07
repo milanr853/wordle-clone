@@ -39,7 +39,7 @@ font-family: 'Open Sans', sans-serif;
     /* background-color:  rgb(224, 224, 171); */
     position: absolute;
     right: 30px;
-    top: 30px;
+    top: 45px;
     border-top-left-radius: 25px;
     border-top-right-radius: 25px;
     border-bottom-left-radius: 25px;
@@ -77,7 +77,7 @@ font-family: 'Open Sans', sans-serif;
         flex-direction: column;
     }
     .buttonHolder{
-        top: 130px;
+        top: 145px;
     }
     .loading{
         top: 150px;

@@ -1,0 +1,98 @@
+.exchangesParentContainer{
+    width: 100%;
+    min-height: 300px;
+    margin-top: 50px ;
+}
+
+.exchangesHeader{
+    width: 100%;
+    height: 75px;
+
+    display: flex;
+    align-items: center;
+    /* color: white; */
+}
+
+.exchangesHeader p{
+    width: 25%;
+}
+
+
+.exchangesWrapper{
+        position: relative;
+    /* color: white; */
+    width: 100%;
+    /* background-color: #3C415C; */
+    height: 75px;
+
+    display: flex;
+    align-items: center;
+
+    /* border-bottom: 1px solid #B4A5A5 ; */
+}
+
+
+
+.exchangeCoinIcon{
+    width: 50px;
+    height: 50px;
+}
+.exchangeCoinIcon img{
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+.exchangeData{
+    width: 100%;
+    /* display: flex;
+    align-items: center; */
+}
+
+.exchangeCoinIcon{
+    margin: 0 15px;
+    position: relative;
+}
+
+
+.outerWrapper{
+    width: 100%;
+    min-height: 75px;
+    /* padding-bottom: 10px; */
+
+}
+
+.exchangeMiddleWrapper{
+    width: 100%;
+    /* background-color: #B4A5A5; */
+    height: 0;
+    overflow:hidden;
+    overflow-y: auto;
+    box-sizing: border-box;
+    padding: 0 15px;
+    /* color: white; */
+}
+
+
+.fa-caret-square-down{
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    cursor: pointer;
+    color: white;
+}
+
+
+@media screen and (max-width:500px) {
+    .exchangesHeader p{
+        font-size: 13px;
+    }
+    .exchangeCoinIcon{
+        width: 40px;
+        height: 40px;
+    }
+    .exchangesParentContainer{
+        margin-top: 0;
+    }
+}
