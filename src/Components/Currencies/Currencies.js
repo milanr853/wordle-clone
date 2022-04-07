@@ -10,7 +10,6 @@ import { useState } from "react"
 
 
 export const Currencies = ({Limited}) => {
-
     const colorMode = useSelector(store => store.changeColorReducer)
 
 
@@ -158,7 +157,7 @@ export const Currencies = ({Limited}) => {
                 {cryptosListAfterSearch.length !== 0 ? <input type="text" placeholder="Search Coin" className="search" onChange={handleChange} style={{ display: Limited? "none" : "block" }} /> : <></>}
             </div>
             <div className="coinsGrid">
-                {cryptosListAfterSearch.length !== 0 ? renderList : <h2 className="loading">Loading...</h2>}
+                {cryptosListAfterSearch.length !== 0 ? renderList : <h2 className="loading"></h2>}
             </div>
         </div>
     )

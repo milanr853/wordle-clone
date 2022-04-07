@@ -3,12 +3,12 @@ import moment from "moment"
 import NewsApi from "../../API/NewsApi"
 import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { getCoinsAndStats_Action, getNewsData_Action, getNewsUpdatedValues_Actions } from "../../Redux/Actions/Actions"
+import { getCoinsAndStats_Action, getNewsData_Action} from "../../Redux/Actions/Actions"
 import API from "../../API/API"
 
 
 
-export const News = ({ simplified }) => {
+export const News = ({ Limited }) => {
 
     const colorMode = useSelector(store => store.changeColorReducer)
 
@@ -16,19 +16,7 @@ export const News = ({ simplified }) => {
 
 
 
-
-
     const dispatch = useDispatch()
-
-
-    //__DISPATCH DEFAULT NEWS VALUES ACTION
-    useEffect(() => {
-        if (!simplified) {
-            dispatch(getNewsUpdatedValues_Actions())
-        }
-    }, [])
-    //__GETTING VALUES FROM STORE
-    const newsValues = useSelector(store => store.displayNewsOverPage_Reducer)
 
 
 
@@ -38,47 +26,91 @@ export const News = ({ simplified }) => {
     // ___Sending News Data Array To Store || Dispatch
     useEffect(() => {
         const fetchData = async () => {
-            const response = await NewsApi("Cryptocurrency", newsValues.count ? newsValues.count : 3)
+            const response = await NewsApi("Cryptocurrency", 100)
             dispatch(getNewsData_Action(response))
         }
         fetchData()
-    }, [newsValues])
+    }, [])
+
     // ___Receiving Data (Stats and Coins) from Store || Selector
     const NewsArray = useSelector((store) => store.getNewsData_Reducer)
+
+    
     // ----------------------------
     // ----------------------------
     //___RenderList Creation || MAP of News
-    const renderList = NewsArray ? NewsArray.map((news) => {
+    const limitedNewsArray = NewsArray ?
+        NewsArray.filter((news) => {
+            if (NewsArray.indexOf(news) < 3) return news
+        })
+        :
+        []
 
 
-        const { name, datePublished, description, image, provider } = news
+    const renderList = Limited ?
+        limitedNewsArray.length != 0 ? limitedNewsArray.map((news) => {
 
 
-        return (
-            <div className="newsWrapper" key={name}>
-                <div className="newsHeader">
-                    <h3 className="newsTitle">
-                        {name}
-                    </h3>
-                    <div className="newsImage">
-                        <img src={image ? image.thumbnail.contentUrl : "https://bit.ly/3ndL2rH"} alt="news-image" />
-                    </div>
-                </div>
-                <p className="newsDescription">
-                    {description}
-                </p>
-                <div className="newsBottom">
-                    <div className="postersInfo">
-                        <div className="providersImageHolder">
-                            <img src={provider[0].image ? provider[0].image.thumbnail.contentUrl : 'https://bit.ly/3ndL2rH'} alt="" />
+            const { name, datePublished, description, image, provider } = news
+
+
+            return (
+                <div className="newsWrapper" key={name}>
+                    <div className="newsHeader">
+                        <h3 className="newsTitle">
+                            {name}
+                        </h3>
+                        <div className="newsImage">
+                            <img src={image ? image.thumbnail.contentUrl : "https://bit.ly/3ndL2rH"} alt="news-image" />
                         </div>
-                        <small className="providersName">{provider[0].name}</small>
                     </div>
-                    <small className="newsTime">{moment(datePublished).startOf('ss').fromNow()}</small>
+                    <p className="newsDescription">
+                        {description}
+                    </p>
+                    <div className="newsBottom">
+                        <div className="postersInfo">
+                            <div className="providersImageHolder">
+                                <img src={provider[0].image ? provider[0].image.thumbnail.contentUrl : 'https://bit.ly/3ndL2rH'} alt="" />
+                            </div>
+                            <small className="providersName">{provider[0].name}</small>
+                        </div>
+                        <small className="newsTime">{moment(datePublished).startOf('ss').fromNow()}</small>
+                    </div>
                 </div>
-            </div>
-        )
-    }) : []
+            )
+        }) : []
+        :
+        NewsArray ? NewsArray.map((news) => {
+
+
+            const { name, datePublished, description, image, provider } = news
+
+
+            return (
+                <div className="newsWrapper" key={name}>
+                    <div className="newsHeader">
+                        <h3 className="newsTitle">
+                            {name}
+                        </h3>
+                        <div className="newsImage">
+                            <img src={image ? image.thumbnail.contentUrl : "https://bit.ly/3ndL2rH"} alt="news-image" />
+                        </div>
+                    </div>
+                    <p className="newsDescription">
+                        {description}
+                    </p>
+                    <div className="newsBottom">
+                        <div className="postersInfo">
+                            <div className="providersImageHolder">
+                                <img src={provider[0].image ? provider[0].image.thumbnail.contentUrl : 'https://bit.ly/3ndL2rH'} alt="" />
+                            </div>
+                            <small className="providersName">{provider[0].name}</small>
+                        </div>
+                        <small className="newsTime">{moment(datePublished).startOf('ss').fromNow()}</small>
+                    </div>
+                </div>
+            )
+        }) : []
     // -----------------------------------------------------------------------------------
 
 
@@ -153,14 +185,14 @@ export const News = ({ simplified }) => {
         <div className="newsParentWrapperContainer">
             {/* <h1>News</h1> */}
             <div className="newsSearchHolder">
-                <select name="select" className="select" onChange={handleChange} style={{ display: newsValues.display ? newsValues.display : "block" }}>
+                <select name="select" className="select" onChange={handleChange} style={{ display: Limited ? "none" : "block" }}>
                     <option value="Cryptocurrency">Cryptocurrency</option>
                     {cryptosArr || coinOptions.length !== 0 ? renderOptions : <></>}
                 </select>
             </div>
             <div className="newsContainer">
                 {
-                    NewsArray && NewsArray.length !== 0 ? renderList : <h2 className="loading">Loading...</h2>
+                    NewsArray && NewsArray.length !== 0 ? renderList : <h2 className="loading"></h2>
                 }
             </div>
         </div>

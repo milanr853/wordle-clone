@@ -10,13 +10,13 @@ const NewsApi = (category, count) => {
         headers: {
             'X-BingApis-SDK': 'true',
             'X-RapidAPI-Host': 'bing-news-search1.p.rapidapi.com',
-            'X-RapidAPI-Key': '08d22be50emsh6b4b2db3e41126dp1679b1jsn18506609ca5e'
+            'X-RapidAPI-Key': '23a5285fb0mshdfab220707b2cb6p1dc129jsn8d5919bf8582'
         }
     };
 
     return fetch(url, options)
         .then(res => res.json())
-        .then(data => data.value)
+        .then(json => json.value)
 
 }
 

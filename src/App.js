@@ -84,7 +84,7 @@ function App() {
           <Route path='/' element={<Home />} />
           <Route path='/currencies' element={<Currencies />} />
           <Route path='/exchanges' element={<Exchanges />} />
-          {/* <Route path='/news' element={<News />} /> */}
+          <Route path='/news' element={<News />} />
           <Route path='/currency/details/:id' element={<Details />} />
         </Routes>
       </div>

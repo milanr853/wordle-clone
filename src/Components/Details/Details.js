@@ -22,6 +22,7 @@ export const Details = () => {
     useEffect(() => {
         const fetchData = async () => {
             const Coin = await CoinApi(id)
+            console.log(Coin.data)
             setCurrency(Coin.data.coin)
         }
         fetchData()
@@ -85,7 +86,7 @@ export const Details = () => {
                                 <div className="iconholder">
                                     <img src={Currency.iconUrl} alt="icon" className="icon" />
                                 </div>
-                                <p className="name">{Currency.name}</p>
+                                <p className="name">{Currency.name?Currency.name:"Null"}</p>
                             </div>
 
                             <div className="middleWrapper">
@@ -98,11 +99,11 @@ export const Details = () => {
                                         <p className="change">Change: </p>
                                     </div>
                                     <div className="values">
-                                        <strong>{`$${millify(Currency.marketCap)}`}</strong>
-                                        <strong>{`$${millify(Currency.price)}`}</strong>
-                                        <strong>{`$${millify(Currency["24hVolume"])}`}</strong>
-                                        <strong>{`$${millify(Currency.allTimeHigh.price)}`}</strong>
-                                        <strong>{Currency.change}%</strong>
+                                        <strong>{Currency.marketCap?`$${millify(Currency.marketCap)}`:0}</strong>
+                                        <strong>{Currency.price?`$${millify(Currency.price)}`:0}</strong>
+                                        <strong>{Currency["24hVolume"]?`$${millify(Currency["24hVolume"])}`:0}</strong>
+                                        <strong>{Currency.allTimeHigh.price?`$${millify(Currency.allTimeHigh.price)}`:0}</strong>
+                                        <strong>{Currency.change?Currency.change:0}%</strong>
                                     </div>
                                 </div>
 
@@ -116,11 +117,11 @@ export const Details = () => {
                                         <p className="circulatingSupply">Circulating Supply: </p>
                                     </div>
                                     <div className="values">
-                                        <strong>{Currency.rank}</strong>
-                                        <strong>{Currency.numberOfMarkets}</strong>
-                                        <strong>{Currency.numberOfExchanges}</strong>
-                                        <strong>{millify(Currency.supply.total)}</strong>
-                                        <strong>{millify(Currency.supply.circulating)}</strong>
+                                        <strong>{Currency.rank?Currency.rank:0}</strong>
+                                        <strong>{Currency.numberOfMarkets?Currency.numberOfMarkets:0}</strong>
+                                        <strong>{Currency.numberOfExchanges?Currency.numberOfExchanges:0}</strong>
+                                        <strong>{Currency.supply.total?millify(Currency.supply.total):"Null"}</strong>
+                                        <strong>{Currency.supply.circulating?millify(Currency.supply.circulating):0}</strong>
                                     </div>
                                 </div>
                             </div>
@@ -131,9 +132,9 @@ export const Details = () => {
                             </div> */}
 
                         <div className="extradata">
-                            <h3 className="whatis">What is {Currency.name}?</h3>
-                            {HTMLReactParser(Currency.description)}
-                            <a href={Currency.websiteUrl} className="links">{Currency.name}</a>
+                            <h3 className="whatis">What is {Currency.name?Currency.name:"Null"}?</h3>
+                            {HTMLReactParser(Currency.description?Currency.description:"Null")}
+                            <a href={Currency.websiteUrl} className="links">{Currency.name?Currency.name:"Null"}</a>
                         </div>
 
                     </div>

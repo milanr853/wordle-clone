@@ -2,7 +2,7 @@ import "./home.css"
 
 import { millify } from 'millify'
 import API from "../../API/API"
-import { getCoinsAndStats_Action, getDefaultValues_Action, getNewsData_Action, getNewsDefault_Action } from "../../Redux/Actions/Actions"
+import { getCoinsAndStats_Action} from "../../Redux/Actions/Actions"
 import { useDispatch } from "react-redux"
 import { useSelector } from "react-redux"
 import { useEffect } from "react"
@@ -11,29 +11,19 @@ import { News } from "../News/News"
 import { Link } from "react-router-dom"
 
 import { useState } from "react"
-import NewsApi from "../../API/NewsApi"
+
 
 
 
 export const Home = () => {
 
     const colorMode = useSelector(store => store.changeColorReducer)
-    
-    const [Limited,setLimited] = useState(true)
+
+    const [Limited, setLimited] = useState(true)
 
 
 
     const dispatch = useDispatch()
-
-
-
-
-    //__DISPATCH DEFAULT VALUES ACTION
-    useEffect(() => {
-        dispatch(getDefaultValues_Action())
-    }, [])
-    //__GETTING VALUES FROM STORE
-    const values = useSelector(store => store.displayCryptosOverPage_Reducer)
 
 
 
@@ -46,13 +36,16 @@ export const Home = () => {
             dispatch(getCoinsAndStats_Action(Obj))
         }
         fetchData()
-    }, [values])
+    }, [])
 
 
 
-const showMoreCurrencies = ()=>{
-    setLimited(false)
-}
+    const showMoreCurrencies = () => {
+        setLimited(false)
+    }
+    const showMoreNews = () => {
+        setLimited(false)
+    }
 
 
 
@@ -127,10 +120,18 @@ const showMoreCurrencies = ()=>{
 
                         <div style={{ display: "flex", width: "100%", justifyContent: "space-between", alignItems: "center" }} className="sectionDivider">
                             <h2 className="sectionDividerHeading">Top 10 Crypto Currencies in the World</h2>
-                            <Link to='/currencies'  className='showMore' onClick={showMoreCurrencies}>Show More</Link>
+                            <Link to='/currencies' className='showMore' onClick={showMoreCurrencies}>Show More</Link>
                         </div>
-                        <Currencies Limited={Limited}/>
+                        <Currencies Limited={Limited} />
+
+                        <div style={{ display: "flex", width: "100%", justifyContent: "space-between", alignItems: "center" }} className="sectionDivider">
+                            <h2 className="sectionDividerHeading">Top Crypto News all around the world</h2>
+                            <Link to='/news' className='showMore' onClick={showMoreNews}>Show More</Link>
+                        </div>
+                            <News Limited={Limited}/>
+                        
                     </div>
+
                     : <h2 className="loading">Loading...</h2>
             }
         </>

@@ -48,8 +48,9 @@ export const Navbar = () => {
     // ----------------------------
     // SETTING COLORS || DARK LIGHT MODE
     useEffect(() => {
+        const logo = document.querySelector('.LOGO')
         const nav = document.querySelector('.navbar')
-        const logo = document.querySelector('.logoHolder')
+        // const logo = document.querySelector('.logoHolder')
         const navoptions = document.querySelectorAll('.navOptions')
         const hamBox = document.querySelector(".hamburgerMenuBox")
         const bi = document.querySelector(".bi-list")
@@ -69,6 +70,7 @@ export const Navbar = () => {
                 hamBox.style.backgroundColor = "#351F39"
             }
             if (logo) {
+                logo.style.textDecoration = "none"
                 // logo.style.transition = "0.7s"
                 logo.style.color = "#B4A5A5"
             }
@@ -119,7 +121,7 @@ export const Navbar = () => {
                 <div className="wrapper">
                     <div className="logoHolder">
                         <i className="bi bi-list" onClick={generateHamBar}></i>
-                        <h1 className="navLogo">Cryptoverse</h1>
+                        <h1 className="navLogo"><Link className="LOGO" to='/'>Cryptoverse</Link></h1>
                     </div>
                     <div className="divider"></div>
                     <div className="menuOptions">
