@@ -74,6 +74,9 @@
 }
 
 
+.navOptions{
+    user-select: none;
+}
 
 
 .bi-list{

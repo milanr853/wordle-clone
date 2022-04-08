@@ -51,6 +51,7 @@ export const Navbar = () => {
     }
 
 
+
     // ----------------------------
     // SETTING COLORS || DARK LIGHT MODE
     useEffect(() => {
@@ -127,7 +128,7 @@ export const Navbar = () => {
                 <div className="wrapper">
                     <div className="logoHolder">
                         <i className="bi bi-list" onClick={generateHamBar}></i>
-                        <h1 className="navLogo"><Link className="LOGO" to='/'>Cryptoverse</Link></h1>
+                        <h1 className="navLogo" onClick={hideHambar}><Link className="LOGO" to='/'>Cryptoverse</Link></h1>
                     </div>
                     <div className="divider"></div>
                     <div className="menuOptions">
