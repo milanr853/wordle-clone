@@ -44,6 +44,12 @@ export const Navbar = () => {
     // ----------------------------
 
 
+    const hideHambar = ()=>{
+        const hamBox = document.querySelector(".hamburgerMenuBox")
+        hamBox.style.top = "-200px"
+        setOnHamBar(false)
+    }
+
 
     // ----------------------------
     // SETTING COLORS || DARK LIGHT MODE
@@ -111,10 +117,10 @@ export const Navbar = () => {
     return (
         <>
             <div className="hamburgerMenuBox">
-                <Link to='/' style={styles} className='navOptions'>Home</Link>
-                <Link to='/currencies' style={styles} className='navOptions'>Cryptocurrencies</Link>
-                <Link to='/exchanges' style={styles} className='navOptions'>Exchanges</Link>
-                <Link to='/news' style={styles} className='navOptions'>News</Link>
+                <Link to='/' style={styles} className='navOptions' onClick={hideHambar}>Home</Link>
+                <Link to='/currencies' style={styles} className='navOptions' onClick={hideHambar}>Cryptocurrencies</Link>
+                <Link to='/exchanges' style={styles} className='navOptions' onClick={hideHambar}>Exchanges</Link>
+                <Link to='/news' style={styles} className='navOptions' onClick={hideHambar}>News</Link>
             </div>
 
             <div className="navbar">
