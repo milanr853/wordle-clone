@@ -128,7 +128,7 @@ export const Home = () => {
                             <h2 className="sectionDividerHeading">Top Crypto News all around the world</h2>
                             <Link to='/news' className='showMore' onClick={showMoreNews}>Show More</Link>
                         </div>
-                            {/* <News Limited={Limited}/> */}
+                            <News Limited={Limited}/>
                         
                     </div>
 

@@ -3,7 +3,7 @@ import moment from "moment"
 import NewsApi from "../../API/NewsApi"
 import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { getCoinsAndStats_Action, getNewsData_Action} from "../../Redux/Actions/Actions"
+import { getCoinsAndStats_Action, getNewsData_Action } from "../../Redux/Actions/Actions"
 import API from "../../API/API"
 
 
@@ -35,7 +35,7 @@ export const News = ({ Limited }) => {
     // ___Receiving Data (Stats and Coins) from Store || Selector
     const NewsArray = useSelector((store) => store.getNewsData_Reducer)
 
-    
+
     // ----------------------------
     // ----------------------------
     //___RenderList Creation || MAP of News
@@ -183,18 +183,20 @@ export const News = ({ Limited }) => {
     // -----------------------------------------------------------------------------------
     return (
         <div className="newsParentWrapperContainer">
-            {/* <h1>News</h1> */}
-            <div className="newsSearchHolder">
-                <select name="select" className="select" onChange={handleChange} style={{ display: Limited ? "none" : "block" }}>
-                    <option value="Cryptocurrency">Cryptocurrency</option>
-                    {cryptosArr || coinOptions.length !== 0 ? renderOptions : <></>}
-                </select>
-            </div>
-            <div className="newsContainer">
-                {
-                    NewsArray && NewsArray.length !== 0 ? renderList : <h2 className="loading"></h2>
-                }
-            </div>
+            {NewsArray.length != 0
+                ? <>
+                    <div className="newsSearchHolder">
+                        <select name="select" className="select" onChange={handleChange} style={{ display: Limited ? "none" : "block" }}>
+                            <option value="Cryptocurrency">Cryptocurrency</option>
+                            {cryptosArr || coinOptions.length !== 0 ? renderOptions : <></>}
+                        </select>
+                    </div>
+                    <div className="newsContainer">
+                        {renderList}
+                    </div>
+                </>
+                : <></>
+            }
         </div>
     )
 }

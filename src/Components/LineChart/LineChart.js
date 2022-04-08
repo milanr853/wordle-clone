@@ -1,27 +1,32 @@
 import './line.css'
-import PriceHistoryApi from "../../API/PriceHistoryApi"
-import { useEffect } from 'react'
-import { useState } from 'react'
-
-import Chart from 'chart.js/auto';
+import { Chart as ChartJS } from "chart.js/auto"
+import { Line } from "react-chartjs-2"
+import { useSelector } from 'react-redux'
 
 
-export const LineChart = ({ price, name, id }) => {
-    const [priceHistory, setPriceHistory] = useState()
-    const [timeStampArr, setTimeStampArr] = useState([])
-    const [priceChangeArr, setPriceChangeArr] = useState([])
+export const LineChart = ({ priceHistory ,price, name, id, change }) => {
+    const colorMode = useSelector(store => store.changeColorReducer)
 
-    useEffect(() => {
-        const fetchData = async () => {
-            const response = await PriceHistoryApi(id)
-            setPriceHistory(response)
-            setTimeStampArr(response && response.history.length != 0 ? response.history.map(item => new Date(item.timestamp).toLocaleDateString()) : [])
-            setPriceChangeArr(response && response.history.length != 0 ? response.history.map(item => item.price) : [])
-        }
-        fetchData()
-    }, [])
+            const timeStampArr = (priceHistory && priceHistory.history.length != 0 ? priceHistory.history.map(item => new Date(item.timestamp).toLocaleDateString()) : [])
+            const priceChangeArr = (priceHistory && priceHistory.history.length != 0 ? priceHistory.history.map(item => item.price) : [])
 
 
+
+
+    const data = {
+        labels: timeStampArr,
+        datasets: [
+            {
+                label: "Price in USD",
+                data: priceChangeArr,
+                backgroundColor: colorMode==="dark"?"white":"dodgerblue",
+                borderColor: colorMode==="dark"?"#bababa":"#2066ac",
+                borderWidth: 1,
+                pointBorderColor:"black",
+                fontColor:"white"
+            }
+        ]
+    }
 
 
 
@@ -32,16 +37,13 @@ export const LineChart = ({ price, name, id }) => {
             <div className="chartHeader">
                 <h3 className="chartTitle">{name} Price Chart</h3>
                 <div className="priceContainer">
-                    <h3 className="priceChange">{priceHistory ? priceHistory.change : 0}%</h3>
+                    <h3 className="priceChange">{change}%</h3>
                     <h3 className="currentPrice">Current {name} Price:  ${price}</h3>
                 </div>
             </div>
 
             <div className="chart">
-
-            
-
-
+                <Line data={data}/>
             </div>
         </>
     )

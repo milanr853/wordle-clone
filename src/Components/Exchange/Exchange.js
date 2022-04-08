@@ -131,12 +131,18 @@ export const Exchanges = () => {
         <div className="exchangesParentContainer">
 
             <div className="exchangesHeader">
-                <p>Exchanges</p>
-                <p>Trade</p>
-                <p>Symbol</p>
-                <p>Change</p>
+                {
+                    renderList.length != 0
+                        ? <>
+                            <p>Exchanges</p>
+                            <p>Trade</p>
+                            <p>Symbol</p>
+                            <p>Change</p>
+                        </>
+                        : <></>
+                }
             </div>
-            {renderList ? renderList : []}
+            {renderList.length != 0?renderList:<></>}
 
 
         </div>
