@@ -13,6 +13,11 @@ import { Link } from "react-router-dom"
 import { useState } from "react"
 
 
+import Styles from '../../Styles';
+const {darkModeColors,lightModeColors,delay} = Styles()
+const {lbg,lborderCol,lcontainerCol,llogoCol,ltextCol,lnavBarBg} = lightModeColors
+const {dbg,dborderCol,dcontainerCol,dlogoCol,dtextCol,dnavBarBg} = darkModeColors
+
 
 
 export const Home = () => {
@@ -62,21 +67,19 @@ export const Home = () => {
 
         if (colorMode === 'dark') {
             homeParentWrapper.forEach((item) => {
-                // item.style.transition = "0.7s"
-                item.style.color = "white"
+                item.style.color = dtextCol
             })
             Links.forEach((link) => {
-                // link.style.transition = "0.7s"
-                link.style.color = "white"
+                link.style.color = dtextCol
             })
         }
         else {
             homeParentWrapper.forEach((item) => {
-                item.style.transition = "0.7s"
-                item.style.color = "black"
+                item.style.transition = delay
+                item.style.color = ltextCol
             })
             Links.forEach((link) => {
-                link.style.transition = "0.7s"
+                link.style.transition = delay
                 link.style.color = "dodgerblue"
             })
         }

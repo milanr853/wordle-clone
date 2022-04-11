@@ -13,9 +13,16 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
+import Styles from './Styles';
+import { useLocation } from 'react-router-dom';
+const {darkModeColors,lightModeColors,delay} = Styles()
+const {lbg,lborderCol,lcontainerCol,llogoCol,ltextCol,lnavBarBg} = lightModeColors
+const {dbg,dborderCol,dcontainerCol,dlogoCol,dtextCol,dnavBarBg} = darkModeColors
+
+
+
 function App() {
   const dispatch = useDispatch()
-
 
 
 
@@ -30,23 +37,23 @@ function App() {
 
 
     if (colorMode === "dark") {
-      if (app) app.style.backgroundColor = "#726A95"
+      if (app) app.style.backgroundColor = dbg
 
       button.style.margin = "0"
       button.style.backgroundColor = "rgb(224, 224, 171)"
-      buttonHolder.style.backgroundColor = "#4a2b4f"
+      buttonHolder.style.backgroundColor = "#476D7C"
 
     }
     else {
       if (app) {
-        app.style.transition = "0.7s"
-        app.style.backgroundColor = "#e2e8f0"
+        app.style.transition = delay
+        app.style.backgroundColor = lbg
       }
             button.style.marginLeft = "62%"
-      button.style.transition = "0.7s"
-      button.style.backgroundColor = "#1893da"
-      buttonHolder.style.transition = "0.7s"
-      buttonHolder.style.backgroundColor = "#16206ff2"
+      button.style.transition = delay
+      button.style.backgroundColor = "#333C83"
+      buttonHolder.style.transition = delay
+      buttonHolder.style.backgroundColor = "#5089C6"
     }
 
   }, [colorMode])

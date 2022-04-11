@@ -5,7 +5,10 @@ import { useSelector } from "react-redux"
 import { useState } from "react"
 
 
-
+import Styles from '../../Styles';
+const {darkModeColors,lightModeColors,delay} = Styles()
+const {lbg,lborderCol,lcontainerCol,llogoCol,ltextCol,lnavBarBg} = lightModeColors
+const {dbg,dborderCol,dcontainerCol,dlogoCol,dtextCol,dnavBarBg} = darkModeColors
 
 
 export const Navbar = () => {
@@ -30,12 +33,12 @@ export const Navbar = () => {
     const generateHamBar = () => {
         const hamBox = document.querySelector(".hamburgerMenuBox")
         if (!onHamBar) {
-            hamBox.style.transition = "0.7s"
+            hamBox.style.transition = delay
             hamBox.style.top = "100px"
             setOnHamBar(true)
         }
         else {
-            hamBox.style.transition = "0.7s "
+            hamBox.style.transition = delay
             hamBox.style.top = "-200px"
             setOnHamBar(false)
         }
@@ -57,7 +60,7 @@ export const Navbar = () => {
     useEffect(() => {
         const logo = document.querySelector('.LOGO')
         const nav = document.querySelector('.navbar')
-        // const logo = document.querySelector('.logoHolder')
+        const divider = document.querySelector('.divider')
         const navoptions = document.querySelectorAll('.navOptions')
         const hamBox = document.querySelector(".hamburgerMenuBox")
         const bi = document.querySelector(".bi-list")
@@ -65,48 +68,46 @@ export const Navbar = () => {
 
         if (colorMode === "dark") {
             if (bi) {
-                // bi.style.transition = "0.7s"
                 bi.style.color = "bisque"
             }
             if (nav) {
-                // nav.style.transition = "0.7s"
-                nav.style.backgroundColor = "#351F39"
+                nav.style.backgroundColor = dnavBarBg
             }
             if (hamBox) {
-                // hamBox.style.transition = "0.7s"
-                hamBox.style.backgroundColor = "#351F39"
+                hamBox.style.backgroundColor = dnavBarBg
             }
             if (logo) {
                 logo.style.textDecoration = "none"
-                // logo.style.transition = "0.7s"
-                logo.style.color = "#B4A5A5"
+                logo.style.color = dlogoCol
             }
             navoptions.forEach((item) => {
-                // item.style.transition = "0.7s"
-                item.style.color = "#B4A5A5"
+                item.style.color = dlogoCol
             })
+            divider.style.backgroundColor = dborderCol
         }
         else {
             if (bi) {
-                bi.style.transition = "0.7s"
+                bi.style.transition = delay
                 bi.style.color = "white"
             }
             if (nav) {
-                nav.style.transition = "0.7s"
-                nav.style.backgroundColor = "#161853"
+                nav.style.transition = delay
+                nav.style.backgroundColor = lnavBarBg
             }
             if (hamBox) {
-                hamBox.style.transition = "0.7s"
-                hamBox.style.backgroundColor = "#161853"
+                hamBox.style.transition = delay
+                hamBox.style.backgroundColor = lnavBarBg
             }
             if (logo) {
-                logo.style.transition = "0.7s"
-                logo.style.color = "#1893da"
+                logo.style.transition = delay
+                logo.style.color = llogoCol
             }
             navoptions.forEach((item) => {
-                item.style.transition = "0.7s"
+                item.style.transition = delay
                 item.style.color = "white"
             })
+            divider.style.transition = delay
+            divider.style.backgroundColor = lborderCol
         }
     }, [colorMode])
     // ----------------------------

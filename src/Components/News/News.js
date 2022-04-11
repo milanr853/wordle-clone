@@ -7,19 +7,18 @@ import { getCoinsAndStats_Action, getNewsData_Action } from "../../Redux/Actions
 import API from "../../API/API"
 
 
+import Styles from '../../Styles';
+const {darkModeColors,lightModeColors,delay} = Styles()
+const {lbg,lborderCol,lcontainerCol,llogoCol,ltextCol} = lightModeColors
+const {dbg,dborderCol,dcontainerCol,dlogoCol,dtextCol} = darkModeColors
+
 
 export const News = ({ Limited }) => {
 
     const colorMode = useSelector(store => store.changeColorReducer)
 
 
-
-
-
     const dispatch = useDispatch()
-
-
-
 
 
     // -----------------------------------------------------------------------------------
@@ -151,16 +150,15 @@ export const News = ({ Limited }) => {
         const newsWrapper = document.querySelectorAll('.newsWrapper')
         if (colorMode === "dark") {
             newsWrapper.forEach((item) => {
-                // item.style.transition = "0.7s"
-                item.style.backgroundColor = "#3C415C"
-                item.style.color = "white"
+                item.style.backgroundColor = dcontainerCol
+                item.style.color = dtextCol
             })
         }
         else {
             newsWrapper.forEach((item) => {
-                item.style.transition = "0.7s"
-                item.style.backgroundColor = "white"
-                item.style.color = "black"
+                item.style.transition = delay
+                item.style.backgroundColor = lcontainerCol
+                item.style.color = ltextCol
             })
         }
     }, [NewsArray, colorMode])

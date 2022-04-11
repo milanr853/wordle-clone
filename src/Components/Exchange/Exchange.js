@@ -7,6 +7,12 @@ import { millify } from "millify"
 import { useSelector } from "react-redux"
 
 
+import Styles from '../../Styles';
+const {darkModeColors,lightModeColors,delay} = Styles()
+const {lbg,lborderCol,lcontainerCol,llogoCol,ltextCol,lnavBarBg} = lightModeColors
+const {dbg,dborderCol,dcontainerCol,dlogoCol,dtextCol,dnavBarBg} = darkModeColors
+
+
 export const Exchanges = () => {
     const colorMode = useSelector(store => store.changeColorReducer)
 
@@ -33,38 +39,38 @@ export const Exchanges = () => {
 
         if (colorMode === "dark") {
             exchangesWrapper.forEach(element => {
-                element.style.color = "white"
-                element.style.backgroundColor = "#3C415C"
-                element.style.borderBottom = "1px solid #B4A5A5 "
+                element.style.color = dtextCol
+                element.style.backgroundColor = dcontainerCol
+                element.style.borderBottom = `1px solid ${dborderCol}`
             })
             exchangeMiddleWrapper.forEach((element) => {
-                element.style.backgroundColor = "#B4A5A5"
-                element.style.color = "white"
+                element.style.backgroundColor = dbg
+                element.style.color = dtextCol
             })
 
             squareDown.forEach((element) => {
-                element.style.color = "white"
+                element.style.color = dtextCol
             })
-            exchangesHeader.style.color = "white"
+            exchangesHeader.style.color = dtextCol
         }
         else {
             exchangesWrapper.forEach(element => {
-                element.style.transition = "0.7s"
-                element.style.color = "black"
-                element.style.backgroundColor = "white"
-                element.style.borderBottom = "1px solid #808080d4 "
+                element.style.transition = delay
+                element.style.color = ltextCol
+                element.style.backgroundColor = lcontainerCol
+                element.style.borderBottom = `1px solid ${lborderCol}`
             })
             exchangeMiddleWrapper.forEach((element) => {
-                element.style.transition = "0.7s"
-                element.style.backgroundColor = "#e2e8f0"
-                element.style.color = "black"
+                element.style.transition = delay
+                element.style.backgroundColor = lbg
+                element.style.color = ltextCol
             })
 
             squareDown.forEach((element) => {
-                element.style.transition = "0.7s"
-                element.style.color = "black"
+                element.style.transition = delay
+                element.style.color = ltextCol
             })
-            exchangesHeader.style.color = "black"
+            exchangesHeader.style.color = ltextCol
         }
     }, [arr, colorMode])
 
@@ -76,14 +82,14 @@ export const Exchanges = () => {
 
         const item = e.target.parentNode.nextSibling
         if (extend) {
-            item.style.transition = "0.7s "
+            item.style.transition = delay
             item.style.boxSizing = "border-box "
             item.style.padding = "10px 15px"
             item.style.height = "150px"
             setExtend(false)
         }
         else {
-            item.style.transition = "0.7s"
+            item.style.transition = delay
             item.style.padding = "0 15px"
             item.style.height = "0"
             setExtend(true)

@@ -7,6 +7,11 @@ import { useState } from "react"
 
 
 
+import Styles from '../../Styles';
+const {darkModeColors,lightModeColors, delay} = Styles()
+const {lbg,lborderCol,lcontainerCol,llogoCol,ltextCol,lnavBarBg} = lightModeColors
+const {dbg,dborderCol,dcontainerCol,dlogoCol,dtextCol,dnavBarBg} = darkModeColors
+
 
 
 export const Currencies = ({ Limited }) => {
@@ -65,25 +70,31 @@ export const Currencies = ({ Limited }) => {
     useEffect(() => {
         const grid = document.querySelectorAll('.coinGridItem')
         const coinStatsValues = document.querySelectorAll('.coinStatsValues')
+        const dividers = document.querySelectorAll(".c-divider")
         if (colorMode === "dark") {
 
             grid.forEach((item) => {
-                // item.style.transition = "0.7s"
-                item.style.backgroundColor = "#3C415C"
+                item.style.backgroundColor = dcontainerCol
             })
             coinStatsValues.forEach((item) => {
-                // item.style.transition = "0.7s"
-                item.style.color = "white"
+                item.style.color = dtextCol
+            })
+            dividers.forEach((item) => {
+                item.style.backgroundColor = dborderCol
             })
         }
         else {
             grid.forEach((item) => {
-                item.style.transition = "0.7s"
-                item.style.backgroundColor = "white"
+                item.style.transition = delay
+                item.style.backgroundColor = lcontainerCol
             })
             coinStatsValues.forEach((item) => {
-                item.style.transition = "0.7s"
-                item.style.color = "black"
+                item.style.transition = delay
+                item.style.color = ltextCol
+            })
+            dividers.forEach((item) => {
+                item.style.transition = delay
+                item.style.backgroundColor = lborderCol
             })
         }
     }, [cryptosListAfterSearch, colorMode])
@@ -102,7 +113,6 @@ export const Currencies = ({ Limited }) => {
 
     const renderList =
         Limited ?
-
             limitedItems.length != 0 ? limitedItems.map((currency) => {
                 return (
                     <Link to={`/currency/details/${currency.uuid}`} className="coinGridItem" key={currency.uuid}>
@@ -122,7 +132,6 @@ export const Currencies = ({ Limited }) => {
                 )
 
             }) : []
-
             :
             cryptosListAfterSearch.length != 0 ? cryptosListAfterSearch.map((currency) => {
                 return (

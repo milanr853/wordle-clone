@@ -13,6 +13,12 @@ import { useSelector } from "react-redux"
 import { LineChart } from "../LineChart/LineChart"
 
 
+import Styles from '../../Styles';
+const {darkModeColors,lightModeColors,delay} = Styles()
+const {lbg,lborderCol,lcontainerCol,llogoCol,ltextCol,lnavBarBg} = lightModeColors
+const {dbg,dborderCol,dcontainerCol,dlogoCol,dtextCol,dnavBarBg} = darkModeColors
+
+
 export const Details = () => {
 
     const colorMode = useSelector(store => store.changeColorReducer)
@@ -44,30 +50,27 @@ export const Details = () => {
         const links = document.querySelectorAll('.extradata a')
         if (colorMode === 'dark') {
             if (parentWrapper) {
-                // parentWrapper.style.transition = "0.7s"
-                parentWrapper.style.backgroundColor = "#3C415C"
+                parentWrapper.style.backgroundColor = dcontainerCol
             }
             if (DetailsWrapper_PARENT) {
-                // DetailsWrapper_PARENT.style.transition = "0.7s"
-                DetailsWrapper_PARENT.style.color = "white"
+                DetailsWrapper_PARENT.style.color = dtextCol
             }
             links.forEach((link) => {
-                // link.style.transition = "0.7s"
                 link.style.color = "yellow"
             })
         }
         else {
             if (parentWrapper) {
-                parentWrapper.style.transition = "0.7s"
-                parentWrapper.style.backgroundColor = "white"
+                parentWrapper.style.transition = delay
+                parentWrapper.style.backgroundColor = lcontainerCol
             }
             if (DetailsWrapper_PARENT) {
-                DetailsWrapper_PARENT.style.transition = "0.7s"
-                DetailsWrapper_PARENT.style.color = "black"
+                DetailsWrapper_PARENT.style.transition = delay
+                DetailsWrapper_PARENT.style.color = ltextCol
             }
             if (links) {
                 links.forEach((link) => {
-                    link.style.transition = "0.7s"
+                    link.style.transition = delay
                     link.style.color = "dodgerblue"
                 })
             }
