@@ -8,7 +8,6 @@ import { LetterArrayContext } from "../Context/LetterContext"
 const WordsTrySection = () => {
 
     const generateArray = () => {
-        console.log('render')
         const arr = []
         for (let i = 0; i < 30; i++) {
             arr.push(Math.random())
@@ -37,7 +36,7 @@ const WordsTrySection = () => {
             const letter = document.getElementById(`letter${ID}`)
             const box = document.getElementById(`${ID}`)
             letter.innerText = elem
-            box.style.borderColor = "#9c9c9c"
+            box.style.borderColor = "#696969"
         })
     }, [getLetterArray])
 

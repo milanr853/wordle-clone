@@ -18,13 +18,15 @@ const Keyboard = () => {
     // Getting the boolean value from the Context
     const { bool, setBool } = useContext(BoolContext)
 
+    const [canBack, setCanBack] = useState(true)
+
 
     // ___USE EFFECT___
     useEffect(() => {
         if (getLetterArray.length > 0 && getLetterArray.length % 5 === 0) {
             setBool(false)
         }
-        else{
+        else {
             setBool(true)
         }
     }, [getLetterArray])
@@ -44,15 +46,21 @@ const Keyboard = () => {
 
 
     const proceedForFurtherWord = (e) => {
-        setBool(true)
+        if (getLetterArray.length > 0 && getLetterArray.length % 5 === 0) {
+            setBool(true)
+            for (let index in getLetterArray) {
+                document.getElementById(`${index}`).style.backgroundColor = "#3a3a3c"
+                document.getElementById(`${index}`).style.borderColor = "#3a3a3c"
+            }
+        }
     }
 
 
 
 
     const backspace = () => {
-        if (getLetterArray.length !== 0) {
-            const filteredArray = getLetterArray.filter((elem,id) => {
+        if (getLetterArray.length > 0 && canBack) {
+            const filteredArray = getLetterArray.filter((elem, id) => {
                 if (id != [getLetterArray.length - 1]) {
                     return elem
                 }
