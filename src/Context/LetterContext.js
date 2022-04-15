@@ -2,33 +2,26 @@ import { useState } from "react";
 import { createContext } from "react";
 
 
-const LetterArrayContext = createContext()
+const LetterMatrixContext = createContext()
 
-const LetterArrayProvider = ({children})=>{
-    const [getLetterArray,setLetterArray] = useState([])
+const LetterMatrixProvider = ({children})=>{
+    const [getLetterMatrix,setLetterMatrix] = useState([
+        [],
+        [],
+        [],
+        [],
+        [],
+        []
+    ])
 
     return(
-        <LetterArrayContext.Provider value={{getLetterArray,setLetterArray}}>{children}</LetterArrayContext.Provider>
+        <LetterMatrixContext.Provider value={{getLetterMatrix,setLetterMatrix}}>{children}</LetterMatrixContext.Provider>
     )
 }
 
 
-export {LetterArrayContext,LetterArrayProvider}
+export {LetterMatrixContext,LetterMatrixProvider}
 
 
 
 
-
-
-const BoolContext = createContext()
-
-const BoolProvider = ({children})=>{
-    const [bool,setBool] = useState(true)
-
-    return(
-        <BoolContext.Provider value={{bool,setBool}}>{children}</BoolContext.Provider>
-    )
-}
-
-
-export {BoolContext,BoolProvider}

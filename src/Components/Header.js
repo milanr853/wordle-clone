@@ -2,6 +2,7 @@ import { Flex,Heading,Text } from "@chakra-ui/react"
 
 
 const Header = ()=>{
+
     const randomNum = Math.floor(Math.random()*11)
 
     return(
