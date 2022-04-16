@@ -8,7 +8,6 @@ import React from "react"
 
 
 const WordsTrySection = () => {
-
     const generateArray = () => {
         const arr = []
         for (let i = 0; i < 6; i++) {
@@ -90,4 +89,4 @@ const WordsTrySection = () => {
 }
 
 
-export default WordsTrySection
+export default React.memo(WordsTrySection)

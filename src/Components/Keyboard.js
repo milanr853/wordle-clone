@@ -22,6 +22,7 @@ const Keyboard = () => {
     // Getting All Words
     const wordStore = useMemo(() => wordsBank(), [])
 
+
     // ___MEDIA QUERIES___
     const [LessThan500] = useMediaQuery('(max-width:500px)')
     const [LessThan350] = useMediaQuery('(max-width:350px)')
@@ -54,7 +55,6 @@ const Keyboard = () => {
     // -------------------------------
     // ___FUNCTIONS___
     const fetchWord = () => {
-        console.log("fetched")
         const ind = Math.floor(Math.random() * 2314)
         const word = wordStore[ind]
         return word.toUpperCase().split("")
@@ -72,14 +72,21 @@ const Keyboard = () => {
 
 
     const compareThenColorUpdate = (typedLetters, rowIndex) => {
-        // console.log(typedLetters, currentWordLetters)
-
         for (let i = 0; i < currentWordLetters.length; i++) {
+            document.getElementById(`letterHolder${i}OfRow${rowIndex}`).style.borderColor = '#3a3a3c'
             if (currentWordLetters.includes(typedLetters[i])) {
                 if (i === currentWordLetters.indexOf(typedLetters[i])) {
                     document.getElementById(`letterHolder${i}OfRow${rowIndex}`).style.backgroundColor = "#538d4e"
+                    document.getElementById(`key-${typedLetters[i]}`).style.background = "#538d4e"
                 }
-                else document.getElementById(`letterHolder${i}OfRow${rowIndex}`).style.backgroundColor = "#b59f3b"
+                else {
+                    document.getElementById(`letterHolder${i}OfRow${rowIndex}`).style.backgroundColor = "#b59f3b"
+                    document.getElementById(`key-${typedLetters[i]}`).style.background = "#b59f3b"
+                }
+            }
+            else {
+                document.getElementById(`letterHolder${i}OfRow${rowIndex}`).style.backgroundColor = '#3a3a3c'
+                document.getElementById(`key-${typedLetters[i]}`).style.background = '#3a3a3c'
             }
         }
     }
@@ -87,32 +94,27 @@ const Keyboard = () => {
 
     const notPresentPopup = () => {
         setShowNoWordPopup(1)
-        setTimeout(() => {
-            setShowNoWordPopup(0)
-        }, 1000);
     }
 
 
     const shortLengthPopup = () => {
         setShowShortPopup(1)
-        setTimeout(() => {
-            setShowShortPopup(0)
-        }, 1000);
     }
 
 
     const gameOver = () => {
+
         setGameContinue(false)
 
         setShowWinPopup(1)
         setTimeout(() => {
             setShowWinPopup(0)
-        }, 1000);
+        }, 1500);
 
 
         setTimeout(() => {
             setDisplay("flex")
-        }, 1050);
+        }, 1550);
     }
 
 
@@ -136,14 +138,15 @@ const Keyboard = () => {
                 const typedWord = getLetterMatrix[rowNum].toString().replaceAll(",", "")
                 const value = checkWordFromStore(typedWord)
 
+
                 if (value) {
                     setWordCount(wordCount += 1)
-                    document.querySelectorAll(`.letterHolderOfRow${rowNum}`).forEach((holder) => {
-                        holder.style.backgroundColor = "#3a3a3c"
-                        holder.style.borderColor = "#3a3a3c"
-                    })
+
+                    //Box color change || Keyboard color change
                     const rowIndex = rowNum
                     compareThenColorUpdate(getLetterMatrix[rowNum], rowIndex)
+
+                    //move to next row
                     const newRowNum = rowNum + 1
                     setRowNum(newRowNum)
                 }
@@ -217,37 +220,37 @@ const Keyboard = () => {
         <>
             <Grid w={LessThan500 ? "100%" : "500px"} h={HeightMoreThan720 ? "200px" : '30%'} boxSizing="border-box" p="8px" paddingTop="0" templateColumns='repeat(20,1fr)' templateRows='repeat(3,1fr)' columnGap='6px' rowGap='9px' textColor='white' fontWeight='semibold' fontSize={LessThan350 ? "10px" : '14px'} className="keyboard" userSelect='none' onKeyDown={handleKeyboard}>
 
-                <Grid bgColor='whiteAlpha.600' borderRadius='4px' column='span 2' justifyContent='center' alignContent='center' cursor='pointer' className="key" onClick={printLetter}>Q</Grid>
-                <Grid bgColor='whiteAlpha.600' borderRadius='4px' column='span 2' justifyContent='center' alignContent='center' cursor='pointer' className="key" onClick={printLetter}>W</Grid>
-                <Grid bgColor='whiteAlpha.600' borderRadius='4px' column='span 2' justifyContent='center' alignContent='center' cursor='pointer' className="key" onClick={printLetter}>E</Grid>
-                <Grid bgColor='whiteAlpha.600' borderRadius='4px' column='span 2' justifyContent='center' alignContent='center' cursor='pointer' className="key" onClick={printLetter}>R</Grid>
-                <Grid bgColor='whiteAlpha.600' borderRadius='4px' column='span 2' justifyContent='center' alignContent='center' cursor='pointer' className="key" onClick={printLetter}>T</Grid>
-                <Grid bgColor='whiteAlpha.600' borderRadius='4px' column='span 2' justifyContent='center' alignContent='center' cursor='pointer' className="key" onClick={printLetter}>Y</Grid>
-                <Grid bgColor='whiteAlpha.600' borderRadius='4px' column='span 2' justifyContent='center' alignContent='center' cursor='pointer' className="key" onClick={printLetter}>U</Grid>
-                <Grid bgColor='whiteAlpha.600' borderRadius='4px' column='span 2' justifyContent='center' alignContent='center' cursor='pointer' className="key" onClick={printLetter}>I</Grid>
-                <Grid bgColor='whiteAlpha.600' borderRadius='4px' column='span 2' justifyContent='center' alignContent='center' cursor='pointer' className="key" onClick={printLetter}>O</Grid>
-                <Grid bgColor='whiteAlpha.600' borderRadius='4px' column='span 2' justifyContent='center' alignContent='center' cursor='pointer' className="key" onClick={printLetter}>P</Grid>
+                <Grid bgColor='whiteAlpha.600' borderRadius='4px' column='span 2' justifyContent='center' alignContent='center' cursor='pointer' className="key" id='key-Q' onClick={printLetter}>Q</Grid>
+                <Grid bgColor='whiteAlpha.600' borderRadius='4px' column='span 2' justifyContent='center' alignContent='center' cursor='pointer' className="key" id='key-W' onClick={printLetter}>W</Grid>
+                <Grid bgColor='whiteAlpha.600' borderRadius='4px' column='span 2' justifyContent='center' alignContent='center' cursor='pointer' className="key" id='key-E' onClick={printLetter}>E</Grid>
+                <Grid bgColor='whiteAlpha.600' borderRadius='4px' column='span 2' justifyContent='center' alignContent='center' cursor='pointer' className="key" id='key-R' onClick={printLetter}>R</Grid>
+                <Grid bgColor='whiteAlpha.600' borderRadius='4px' column='span 2' justifyContent='center' alignContent='center' cursor='pointer' className="key" id='key-T' onClick={printLetter}>T</Grid>
+                <Grid bgColor='whiteAlpha.600' borderRadius='4px' column='span 2' justifyContent='center' alignContent='center' cursor='pointer' className="key" id='key-Y' onClick={printLetter}>Y</Grid>
+                <Grid bgColor='whiteAlpha.600' borderRadius='4px' column='span 2' justifyContent='center' alignContent='center' cursor='pointer' className="key" id='key-U' onClick={printLetter}>U</Grid>
+                <Grid bgColor='whiteAlpha.600' borderRadius='4px' column='span 2' justifyContent='center' alignContent='center' cursor='pointer' className="key" id='key-I' onClick={printLetter}>I</Grid>
+                <Grid bgColor='whiteAlpha.600' borderRadius='4px' column='span 2' justifyContent='center' alignContent='center' cursor='pointer' className="key" id='key-O' onClick={printLetter}>O</Grid>
+                <Grid bgColor='whiteAlpha.600' borderRadius='4px' column='span 2' justifyContent='center' alignContent='center' cursor='pointer' className="key" id='key-P' onClick={printLetter}>P</Grid>
 
                 <Grid></Grid>
-                <Grid bgColor='whiteAlpha.600' borderRadius='4px' column='span 2' justifyContent='center' alignContent='center' cursor='pointer' className="key" onClick={printLetter}>A</Grid>
-                <Grid bgColor='whiteAlpha.600' borderRadius='4px' column='span 2' justifyContent='center' alignContent='center' cursor='pointer' className="key" onClick={printLetter}>S</Grid>
-                <Grid bgColor='whiteAlpha.600' borderRadius='4px' column='span 2' justifyContent='center' alignContent='center' cursor='pointer' className="key" onClick={printLetter}>D</Grid>
-                <Grid bgColor='whiteAlpha.600' borderRadius='4px' column='span 2' justifyContent='center' alignContent='center' cursor='pointer' className="key" onClick={printLetter}>F</Grid>
-                <Grid bgColor='whiteAlpha.600' borderRadius='4px' column='span 2' justifyContent='center' alignContent='center' cursor='pointer' className="key" onClick={printLetter}>G</Grid>
-                <Grid bgColor='whiteAlpha.600' borderRadius='4px' column='span 2' justifyContent='center' alignContent='center' cursor='pointer' className="key" onClick={printLetter}>H</Grid>
-                <Grid bgColor='whiteAlpha.600' borderRadius='4px' column='span 2' justifyContent='center' alignContent='center' cursor='pointer' className="key" onClick={printLetter}>J</Grid>
-                <Grid bgColor='whiteAlpha.600' borderRadius='4px' column='span 2' justifyContent='center' alignContent='center' cursor='pointer' className="key" onClick={printLetter}>K</Grid>
-                <Grid bgColor='whiteAlpha.600' borderRadius='4px' column='span 2' justifyContent='center' alignContent='center' cursor='pointer' className="key" onClick={printLetter}>L</Grid>
+                <Grid bgColor='whiteAlpha.600' borderRadius='4px' column='span 2' justifyContent='center' alignContent='center' cursor='pointer' className="key" id="key-A" onClick={printLetter}>A</Grid>
+                <Grid bgColor='whiteAlpha.600' borderRadius='4px' column='span 2' justifyContent='center' alignContent='center' cursor='pointer' className="key" id="key-S" onClick={printLetter}>S</Grid>
+                <Grid bgColor='whiteAlpha.600' borderRadius='4px' column='span 2' justifyContent='center' alignContent='center' cursor='pointer' className="key" id="key-D" onClick={printLetter}>D</Grid>
+                <Grid bgColor='whiteAlpha.600' borderRadius='4px' column='span 2' justifyContent='center' alignContent='center' cursor='pointer' className="key" id="key-F" onClick={printLetter}>F</Grid>
+                <Grid bgColor='whiteAlpha.600' borderRadius='4px' column='span 2' justifyContent='center' alignContent='center' cursor='pointer' className="key" id="key-G" onClick={printLetter}>G</Grid>
+                <Grid bgColor='whiteAlpha.600' borderRadius='4px' column='span 2' justifyContent='center' alignContent='center' cursor='pointer' className="key" id="key-H" onClick={printLetter}>H</Grid>
+                <Grid bgColor='whiteAlpha.600' borderRadius='4px' column='span 2' justifyContent='center' alignContent='center' cursor='pointer' className="key" id="key-J" onClick={printLetter}>J</Grid>
+                <Grid bgColor='whiteAlpha.600' borderRadius='4px' column='span 2' justifyContent='center' alignContent='center' cursor='pointer' className="key" id="key-K" onClick={printLetter}>K</Grid>
+                <Grid bgColor='whiteAlpha.600' borderRadius='4px' column='span 2' justifyContent='center' alignContent='center' cursor='pointer' className="key" id="key-L" onClick={printLetter}>L</Grid>
                 <Grid></Grid>
 
                 <Grid bgColor='whiteAlpha.600' borderRadius='4px' column='span 3' justifyContent='center' alignContent='center' cursor='pointer' className="Enter" onClick={proceedForFurtherWord}>ENTER</Grid>
-                <Grid bgColor='whiteAlpha.600' borderRadius='4px' column='span 2' justifyContent='center' alignContent='center' cursor='pointer' className="key" onClick={printLetter}>Z</Grid>
-                <Grid bgColor='whiteAlpha.600' borderRadius='4px' column='span 2' justifyContent='center' alignContent='center' cursor='pointer' className="key" onClick={printLetter}>X</Grid>
-                <Grid bgColor='whiteAlpha.600' borderRadius='4px' column='span 2' justifyContent='center' alignContent='center' cursor='pointer' className="key" onClick={printLetter}>C</Grid>
-                <Grid bgColor='whiteAlpha.600' borderRadius='4px' column='span 2' justifyContent='center' alignContent='center' cursor='pointer' className="key" onClick={printLetter}>V</Grid>
-                <Grid bgColor='whiteAlpha.600' borderRadius='4px' column='span 2' justifyContent='center' alignContent='center' cursor='pointer' className="key" onClick={printLetter}>B</Grid>
-                <Grid bgColor='whiteAlpha.600' borderRadius='4px' column='span 2' justifyContent='center' alignContent='center' cursor='pointer' className="key" onClick={printLetter}>N</Grid>
-                <Grid bgColor='whiteAlpha.600' borderRadius='4px' column='span 2' justifyContent='center' alignContent='center' cursor='pointer' className="key" onClick={printLetter}>M</Grid>
+                <Grid bgColor='whiteAlpha.600' borderRadius='4px' column='span 2' justifyContent='center' alignContent='center' cursor='pointer' className="key" id="key-Z" onClick={printLetter}>Z</Grid>
+                <Grid bgColor='whiteAlpha.600' borderRadius='4px' column='span 2' justifyContent='center' alignContent='center' cursor='pointer' className="key" id="key-X" onClick={printLetter}>X</Grid>
+                <Grid bgColor='whiteAlpha.600' borderRadius='4px' column='span 2' justifyContent='center' alignContent='center' cursor='pointer' className="key" id="key-C" onClick={printLetter}>C</Grid>
+                <Grid bgColor='whiteAlpha.600' borderRadius='4px' column='span 2' justifyContent='center' alignContent='center' cursor='pointer' className="key" id="key-V" onClick={printLetter}>V</Grid>
+                <Grid bgColor='whiteAlpha.600' borderRadius='4px' column='span 2' justifyContent='center' alignContent='center' cursor='pointer' className="key" id="key-B" onClick={printLetter}>B</Grid>
+                <Grid bgColor='whiteAlpha.600' borderRadius='4px' column='span 2' justifyContent='center' alignContent='center' cursor='pointer' className="key" id="key-N" onClick={printLetter}>N</Grid>
+                <Grid bgColor='whiteAlpha.600' borderRadius='4px' column='span 2' justifyContent='center' alignContent='center' cursor='pointer' className="key" id="key-M" onClick={printLetter}>M</Grid>
                 <Grid bgColor='whiteAlpha.600' borderRadius='4px' column='span 3' justifyContent='center' alignContent='center' cursor='pointer' className="Back" onClick={backspace}><i className="fas fa-backspace"></i></Grid>
             </Grid>
         </>
@@ -255,4 +258,4 @@ const Keyboard = () => {
 }
 
 
-export default Keyboard
+export default React.memo(Keyboard)

@@ -11,21 +11,43 @@ import { DisplayContext } from '../Context/GameOverPopupDisplayContext'
 
 import { useContext } from "react"
 
+import React from "react"
+
 
 const PlayArea = () => {
-    const { showShortPopup } = useContext(ShortPopupContext)
-    const { showNoWordPopup } = useContext(WordNotPresentPopupContext)
+    const { showShortPopup, setShowShortPopup } = useContext(ShortPopupContext)
+    const { showNoWordPopup, setShowNoWordPopup } = useContext(WordNotPresentPopupContext)
     const { showWinPopup } = useContext(WinPopupContext)
+    const { Display, setDisplay } = useContext(DisplayContext)
     const { gameOverData } = useContext(MessageContext)
-    const { Display,setDisplay } = useContext(DisplayContext)
 
     const [HeightMoreThan900] = useMediaQuery('(min-height:900px)')
 
-    const setDisplayofPopup = ()=>{
+
+// --------------------------------------------------------------
+    const setDisplayofPopup = () => {
         setDisplay("none")
     }
 
+
+    if (showShortPopup === 1) {
+        setTimeout(() => {
+            setShowShortPopup(0)
+        }, 1000)
+    }
+
+
+    if (setShowNoWordPopup === 1) {
+        setTimeout(() => {
+            setShowNoWordPopup(0)
+        }, 1000)
+    }
+
+
     const display = () => Display
+// --------------------------------------------------------------
+
+
 
     return (
         <>
@@ -38,7 +60,7 @@ const PlayArea = () => {
                 <Flex bgColor='#ffffff' width='175px' h='50px' borderRadius='5px' justifyContent='center' alignItems="center" fontWeight='bold' position='absolute' top='5%' opacity={showWinPopup} transition='0.3s' className="winPopup">{gameOverData.message}</Flex>
 
                 <Flex bgColor='#303030' width='300px' h='200px' justifyContent='center' alignItems="center" flexDir='column' fontWeight='bold' position='absolute' top='20%' className="gameOverPopup" color='white' display={display()}>
-                    <i className="bi bi-x" style={{position:"absolute",top:"0",right:"0",cursor:"pointer"}} onClick={setDisplayofPopup}></i>
+                    <i className="bi bi-x" style={{ position: "absolute", top: "0", right: "0", cursor: "pointer" }} onClick={setDisplayofPopup}></i>
                     <Text pb='20px'>Attempts: {gameOverData.count} of 6</Text>
                     <Text>Win: {gameOverData.message.includes(":(") ? "0%" : "100%"}</Text>
                 </Flex>
@@ -51,4 +73,4 @@ const PlayArea = () => {
 }
 
 
-export default PlayArea
+export default React.memo(PlayArea)
