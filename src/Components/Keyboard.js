@@ -59,7 +59,7 @@ const Keyboard = () => {
     const fetchWord = () => {
         const ind = Math.floor(Math.random() * 2314)
         const word = wordStore[ind]
-        return word.toUpperCase().split("")
+        return word.toUpperCase()
     }
     const currentWordLetters = useMemo(() => fetchWord(), [])
 
@@ -74,23 +74,59 @@ const Keyboard = () => {
 
 
     const compareThenColorUpdate = (typedLetters, rowIndex) => {
-        for (let i = 0; i < currentWordLetters.length; i++) {
-            document.getElementById(`letterHolder${i}OfRow${rowIndex}`).style.borderColor = '#3a3a3c'
-            if (currentWordLetters.includes(typedLetters[i])) {
-                if (i === currentWordLetters.indexOf(typedLetters[i])) {
-                    document.getElementById(`letterHolder${i}OfRow${rowIndex}`).style.backgroundColor = "#538d4e"
-                    document.getElementById(`key-${typedLetters[i]}`).style.background = "#538d4e"
-                }
-                else {
-                    document.getElementById(`letterHolder${i}OfRow${rowIndex}`).style.backgroundColor = "#b59f3b"
-                    document.getElementById(`key-${typedLetters[i]}`).style.background = "#b59f3b"
-                }
+        console.log(typedLetters, currentWordLetters)
+        let typed = typedLetters
+        let current = currentWordLetters
+
+        //Loop for keys
+        // let j = 0
+        // for(let i=0; i<currentWordLetters.length; i++){
+        //     const key = document.getElementById(`key-${typedLetters[i]}`)
+        //     if(typedLetters[i]===currentWordLetters[j] || key.className.includes('correct')){
+        //         key.style.backgroundColor="#538d4e"
+        //         key.classList.add('correct')
+        //     }
+        //     else if(currentWordLetters.includes(typedLetters[i]) && !key.className.includes('correct')){
+        //         key.style.backgroundColor="#b59f3b"
+        //     }
+        //     else {
+        //         key.style.backgroundColor='#3a3a3c'
+        //     }
+        //     j++
+        // }
+
+        //Recurssion for box
+        function checking(typed, current, n, fixInd) {
+            const key = document.getElementById(`key-${typedLetters[n]}`)
+            const box = document.getElementById(`letterHolder${n}OfRow${rowIndex}`)
+            if (n > 4) {
+                return
+            }
+
+            if (typed[n] === current[n] || key.className.includes('correct')) {
+                box.style.backgroundColor = "#538d4e"
+                box.style.borderColor = "#538d4e"
+                key.style.backgroundColor = "#538d4e"
+                key.classList.add('correct')
+                typed = typed.replace(typed[n], '.')
+                current = current.replace(current[n], '.')
+            }
+            else if (current.includes(typed[n]) && !key.className.includes('correct')) {
+                box.style.backgroundColor = "#b59f3b"
+                box.style.borderColor = "#b59f3b"
+                key.style.backgroundColor = "#b59f3b"
+                key.classList.add('correct')
+                current = current.replace(current[current.indexOf(typed[n])], '.')
+                typed = typed.replace(typed[n], '.')
             }
             else {
-                document.getElementById(`letterHolder${i}OfRow${rowIndex}`).style.backgroundColor = '#3a3a3c'
-                document.getElementById(`key-${typedLetters[i]}`).style.background = '#3a3a3c'
+                box.style.backgroundColor = '#3a3a3c'
+                box.style.borderColor = '#3a3a3c'
+                key.style.backgroundColor = '#3a3a3c'
             }
+            checking(typed, current, n + 1, fixInd)
         }
+        checking(typed, current, 0, 0)
     }
 
 
@@ -181,7 +217,7 @@ const Keyboard = () => {
 
                     //Box color change || Keyboard color change
                     const rowIndex = rowNum
-                    compareThenColorUpdate(getLetterMatrix[rowNum], rowIndex)
+                    compareThenColorUpdate(typedWord, rowIndex)
 
                     //move to next row
                     const newRowNum = rowNum + 1
@@ -195,7 +231,6 @@ const Keyboard = () => {
 
 
                 const fetchedLetter = [...currentWordLetters].toString().replaceAll(",", "")
-                console.log(fetchedLetter, typedWord)
                 if (fetchedLetter === typedWord || wordCount === 6) {
                     // game-over function
                     gameOver()
