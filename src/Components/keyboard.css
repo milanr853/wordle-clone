@@ -1,0 +1,31 @@
+.shake{
+    animation: shake 325ms ease-in-out;
+}
+
+@keyframes shake {
+    10%{
+        transform: translateX(-5%);
+    }
+    30%{
+        transform: translateX(5%);
+    }
+    50%{
+        transform: translateX(-7.5%);
+    }
+    70%{
+        transform: translateX(7.5%);
+    }
+    90%{
+        transform: translateX(-5%);
+    }
+    100%{
+        transform: translateX(0);
+    }
+}
+
+
+.flip{
+
+    transform: rotateX(90deg);
+    transition: transform 200ms linear;
+}

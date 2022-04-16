@@ -15,6 +15,8 @@ import { WinPopupContext } from "../Context/WinPopupContext"
 import { MessageContext } from "../Context/GameOverMessageContext"
 import { DisplayContext } from '../Context/GameOverPopupDisplayContext'
 
+import "./keyboard.css"
+
 
 
 
@@ -92,6 +94,39 @@ const Keyboard = () => {
     }
 
 
+    const shakeTiles = (rowNum) => {
+        const rowElements = document.querySelectorAll(`.letterHolderOfRow${rowNum}`)
+        rowElements.forEach(elem => {
+            elem.classList.add('shake')
+            setTimeout(() => {
+                elem.classList.remove("shake")
+            }, 500);
+        })
+    }
+
+
+    const flipTiles = (rowNum) => {
+        const rowElements = document.querySelectorAll(`.letterHolderOfRow${rowNum}`)
+        setGameContinue(false)
+
+        rowElements.forEach((elem, ind) => {
+            setTimeout(() => {
+                elem.classList.add('flip')
+            }, (ind + 1) * 325);
+            setTimeout(() => {
+                elem.style.transform = "rotateX(0deg)"
+            }, ((ind + 2) * 325));
+        })
+
+        setTimeout(() => {
+            rowElements.forEach((elem, ind) => {
+                elem.classList.remove('flip')
+            })
+            setGameContinue(true)
+        }, 2100);
+    }
+
+
     const notPresentPopup = () => {
         setShowNoWordPopup(1)
     }
@@ -103,18 +138,18 @@ const Keyboard = () => {
 
 
     const gameOver = () => {
-
-        setGameContinue(false)
-
-        setShowWinPopup(1)
         setTimeout(() => {
-            setShowWinPopup(0)
-        }, 1500);
+            setGameContinue(false)
 
+            setShowWinPopup(1)
+            setTimeout(() => {
+                setShowWinPopup(0)
+            }, 1500);
 
-        setTimeout(() => {
-            setDisplay("flex")
-        }, 1550);
+            setTimeout(() => {
+                setDisplay("flex")
+            }, 1550);
+        }, 2200);
     }
 
 
@@ -141,6 +176,8 @@ const Keyboard = () => {
 
                 if (value) {
                     setWordCount(wordCount += 1)
+                    // Flip Tiles
+                    flipTiles(rowNum)
 
                     //Box color change || Keyboard color change
                     const rowIndex = rowNum
@@ -153,6 +190,7 @@ const Keyboard = () => {
                 else {
                     // pop-up func
                     notPresentPopup()
+                    shakeTiles(rowNum)
                 }
 
 
@@ -167,6 +205,7 @@ const Keyboard = () => {
             else {
                 //pop-up for short-length
                 shortLengthPopup()
+                shakeTiles(rowNum)
             }
         }
     }
