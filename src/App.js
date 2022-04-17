@@ -26,7 +26,7 @@ function App(e) {
               <ShortPopupProvider>
                 <RowProvider>
                   <LetterMatrixProvider>
-                    <Flex w='100vw' h='100vh' bgColor='blackAlpha.900' className="bodyWrapper" flexDirection='column' >
+                    <Flex w='100vw' h='100vh' bgColor='blackAlpha.900' className="bodyWrapper" flexDirection='column'>
                       <Header />
                       <PlayArea />
                     </Flex>

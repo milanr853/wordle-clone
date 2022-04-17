@@ -15,7 +15,7 @@ import { WinPopupContext } from "../Context/WinPopupContext"
 import { MessageContext } from "../Context/GameOverMessageContext"
 import { DisplayContext } from '../Context/GameOverPopupDisplayContext'
 
-import "./keyboard.css"
+import "./styles.css"
 
 
 
@@ -57,8 +57,11 @@ const Keyboard = () => {
     // -------------------------------
     // ___FUNCTIONS___
     const fetchWord = () => {
-        const ind = Math.floor(Math.random() * 2314)
-        const word = wordStore[ind]
+        let WORDBANK = new Set(wordStore)
+        WORDBANK = [...WORDBANK]
+
+        const ind = Math.floor(Math.random() * 12970)
+        const word = WORDBANK[ind]
         return word.toUpperCase()
     }
     const currentWordLetters = useMemo(() => fetchWord(), [])
@@ -76,39 +79,44 @@ const Keyboard = () => {
     const compareThenColorUpdate = (typedLetters, rowIndex) => {
         let typed = typedLetters
         let current = currentWordLetters
+        const setTilesArr = []
 
-        //Recurssion for box
-        function checking(typed, current, n, fixInd) {
-            const key = document.getElementById(`key-${typedLetters[n]}`)
-            const box = document.getElementById(`letterHolder${n}OfRow${rowIndex}`)
-            if (n > 4) {
-                return
-            }
+        const Row = document.querySelector(`#row${rowIndex}`).childNodes
+        Row.forEach(tile => {
+            setTilesArr.push({ tile, letter: tile.innerText, color: "#3a3a3c" })
+        })
 
-            if (typed[n] === current[n] ) {
-                box.style.backgroundColor = "#538d4e"
-                box.style.borderColor = "#538d4e"
-                key.style.backgroundColor = "#538d4e"
-                typed = typed.replace(typed[n], '.')
-                current = current.replace(current[n], '.')
+        setTilesArr.forEach((obj, ind) => {
+            if (obj.letter === current[ind]) {
+                obj.tile.style.backgroundColor = "#538d4e"
+                obj.tile.style.borderColor = "#538d4e"
+                obj.tile.classList.add("correct")
+                obj.color = "#538d4e"
+                current = current.replace(obj.tile.innerText, ".")
             }
-
-            else if (current.includes(typed[n]) ) {
-                box.style.backgroundColor = "#b59f3b"
-                box.style.borderColor = "#b59f3b"
-                key.style.backgroundColor = "#b59f3b"
-                current = current.replace(current[current.indexOf(typed[n])], '.')
-                typed = typed.replace(typed[n], '.')
+        })
+        setTilesArr.forEach(obj => {
+            if (current.includes(obj.letter)) {
+                obj.tile.style.backgroundColor = "#b59f3b"
+                obj.tile.style.borderColor = "#b59f3b"
+                obj.tile.classList.add("almost")
+                obj.color = "#b59f3b"
+                current = current.replace(obj.tile.innerText, ".")
             }
-
-            else {
-                box.style.backgroundColor = '#3a3a3c'
-                box.style.borderColor = '#3a3a3c'
-                key.style.backgroundColor = '#3a3a3c'
+        })
+        setTilesArr.forEach((obj, ind) => {
+            if (!obj.tile.className.includes('almost') && !obj.tile.className.includes('correct')) {
+                obj.tile.style.backgroundColor = '#3a3a3c'
+                obj.tile.style.borderColor = '#3a3a3c'
             }
-            checking(typed, current, n + 1, fixInd)
-        }
-        checking(typed, current, 0, 0)
+        })
+        Row.forEach((tile, ind) => {
+            setTimeout(() => {
+                const key = document.getElementById(`key-${tile.innerText}`)
+                key.style.transition = '0.3s'
+                key.style.backgroundColor = setTilesArr[ind].color
+            }, (ind + 1) * 350);
+        })
     }
 
 
@@ -176,6 +184,7 @@ const Keyboard = () => {
     // ___EVENT LISTNERS___
     const printLetter = (e) => {
         if (GameContinue) {
+            console.log(e)
             if (getLetterMatrix[rowNum].length < 5) {
                 const newMatrix = [...getLetterMatrix]
                 newMatrix[rowNum] = [...newMatrix[rowNum], e.target.innerText.toUpperCase()]
@@ -216,7 +225,7 @@ const Keyboard = () => {
                 if (fetchedLetter === typedWord || wordCount === 6) {
                     // game-over function
                     gameOver()
-                    setGameOverData({ message: fetchedLetter === typedWord ? "Cool!!! You did it" : "Sad :( You lose", count: wordCount,word:currentWordLetters })
+                    setGameOverData({ message: fetchedLetter === typedWord ? "Cool!!! You did it" : "Sad :( You lose", count: wordCount, word: currentWordLetters })
                 }
             }
             else {
