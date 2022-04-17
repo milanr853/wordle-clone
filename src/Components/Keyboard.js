@@ -216,7 +216,7 @@ const Keyboard = () => {
                 if (fetchedLetter === typedWord || wordCount === 6) {
                     // game-over function
                     gameOver()
-                    setGameOverData({ message: fetchedLetter === typedWord ? "Cool!!! You did it" : "Sad :( You lose", count: wordCount })
+                    setGameOverData({ message: fetchedLetter === typedWord ? "Cool!!! You did it" : "Sad :( You lose", count: wordCount,word:currentWordLetters })
                 }
             }
             else {

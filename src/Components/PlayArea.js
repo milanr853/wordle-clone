@@ -63,6 +63,7 @@ const PlayArea = () => {
                     <i className="bi bi-x" style={{ position: "absolute", top: "0", right: "0", cursor: "pointer" }} onClick={setDisplayofPopup}></i>
                     <Text pb='20px'>Attempts: {gameOverData.count} of 6</Text>
                     <Text>Win: {gameOverData.message.includes(":(") ? "0%" : "100%"}</Text>
+                    <Text>Word: {gameOverData.word}</Text>
                 </Flex>
 
                 <WordsTrySection />
