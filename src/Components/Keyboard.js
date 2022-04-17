@@ -74,26 +74,8 @@ const Keyboard = () => {
 
 
     const compareThenColorUpdate = (typedLetters, rowIndex) => {
-        console.log(typedLetters, currentWordLetters)
         let typed = typedLetters
         let current = currentWordLetters
-
-        //Loop for keys
-        // let j = 0
-        // for(let i=0; i<currentWordLetters.length; i++){
-        //     const key = document.getElementById(`key-${typedLetters[i]}`)
-        //     if(typedLetters[i]===currentWordLetters[j] || key.className.includes('correct')){
-        //         key.style.backgroundColor="#538d4e"
-        //         key.classList.add('correct')
-        //     }
-        //     else if(currentWordLetters.includes(typedLetters[i]) && !key.className.includes('correct')){
-        //         key.style.backgroundColor="#b59f3b"
-        //     }
-        //     else {
-        //         key.style.backgroundColor='#3a3a3c'
-        //     }
-        //     j++
-        // }
 
         //Recurssion for box
         function checking(typed, current, n, fixInd) {
@@ -103,22 +85,22 @@ const Keyboard = () => {
                 return
             }
 
-            if (typed[n] === current[n] || key.className.includes('correct')) {
+            if (typed[n] === current[n] ) {
                 box.style.backgroundColor = "#538d4e"
                 box.style.borderColor = "#538d4e"
                 key.style.backgroundColor = "#538d4e"
-                key.classList.add('correct')
                 typed = typed.replace(typed[n], '.')
                 current = current.replace(current[n], '.')
             }
-            else if (current.includes(typed[n]) && !key.className.includes('correct')) {
+
+            else if (current.includes(typed[n]) ) {
                 box.style.backgroundColor = "#b59f3b"
                 box.style.borderColor = "#b59f3b"
                 key.style.backgroundColor = "#b59f3b"
-                key.classList.add('correct')
                 current = current.replace(current[current.indexOf(typed[n])], '.')
                 typed = typed.replace(typed[n], '.')
             }
+
             else {
                 box.style.backgroundColor = '#3a3a3c'
                 box.style.borderColor = '#3a3a3c'
@@ -292,7 +274,7 @@ const Keyboard = () => {
 
     return (
         <>
-            <Grid w={LessThan500 ? "100%" : "500px"} h={HeightMoreThan720 ? "200px" : '30%'} boxSizing="border-box" p="8px" paddingTop="0" templateColumns='repeat(20,1fr)' templateRows='repeat(3,1fr)' columnGap='6px' rowGap='9px' textColor='white' fontWeight='semibold' fontSize={LessThan350 ? "10px" : '14px'} className="keyboard" userSelect='none' onKeyDown={handleKeyboard}>
+            <Grid w={LessThan500 ? "100%" : "500px"} h={HeightMoreThan720 ? "200px" : '30%'} boxSizing="border-box" p="8px" paddingTop="0" templateColumns='repeat(20,1fr)' templateRows='repeat(3,1fr)' columnGap='6px' rowGap='9px' textColor='white' fontWeight='semibold' fontSize={LessThan350 ? "10px" : '14px'} className="keyboard" userSelect='none' onKeyDown={handleKeyboard} value={currentWordLetters}>
 
                 <Grid bgColor='whiteAlpha.600' borderRadius='4px' column='span 2' justifyContent='center' alignContent='center' cursor='pointer' className="key" id='key-Q' onClick={printLetter}>Q</Grid>
                 <Grid bgColor='whiteAlpha.600' borderRadius='4px' column='span 2' justifyContent='center' alignContent='center' cursor='pointer' className="key" id='key-W' onClick={printLetter}>W</Grid>
