@@ -1,4 +1,4 @@
-import { Box, Flex, Grid, GridItem, useMediaQuery } from "@chakra-ui/react"
+import { Grid, useMediaQuery } from "@chakra-ui/react"
 import { LetterMatrixContext } from "../Context/LetterContext"
 import { RowContext } from "../Context/RowContext"
 import { useContext } from "react"
@@ -6,7 +6,7 @@ import { useEffect } from "react"
 import React from "react"
 
 import wordsBank from '../WordsBank'
-import { useMemo } from "react"
+import { useMemo, useCallback } from "react"
 import { useState } from "react"
 
 import { ShortPopupContext } from "../Context/ShortLengthPopupContext"
@@ -77,7 +77,6 @@ const Keyboard = () => {
 
 
     const compareThenColorUpdate = (typedLetters, rowIndex) => {
-        let typed = typedLetters
         let current = currentWordLetters
         const setTilesArr = []
 
@@ -241,7 +240,7 @@ const Keyboard = () => {
             if (getLetterMatrix[rowNum].length > 0) {
                 const Matrix = [...getLetterMatrix]
                 Matrix[rowNum] = Matrix[rowNum].filter((elem, ind) => {
-                    if (ind == (Matrix[rowNum].length - 1)) {
+                    if (ind === (Matrix[rowNum].length - 1)) {
                         //do nothing
                     }
                     else return elem
@@ -255,7 +254,7 @@ const Keyboard = () => {
 
 
     // ___For adding On Key Down || Keyboard Events in react___
-    const handleKeyboard = (event) => {
+    const handleKeyboard = useCallback((event) => {
         if (GameContinue) {
             if (event.keyCode >= 65 && event.keyCode <= 90) {
                 if (getLetterMatrix[rowNum].length < 5) {
@@ -271,7 +270,7 @@ const Keyboard = () => {
                 backspace()
             }
         }
-    }
+    }, [])
 
 
     useEffect(() => {

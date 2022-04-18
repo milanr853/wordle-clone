@@ -1,4 +1,4 @@
-import { Box, Flex, useMediaQuery, VStack, Heading, Text } from "@chakra-ui/react"
+import { Flex, useMediaQuery, Text } from "@chakra-ui/react"
 
 import WordsTrySection from "./WordsTrySection"
 import Keyboard from "./Keyboard"
@@ -24,7 +24,7 @@ const PlayArea = () => {
     const [HeightMoreThan900] = useMediaQuery('(min-height:900px)')
 
 
-// --------------------------------------------------------------
+    // --------------------------------------------------------------
     const setDisplayofPopup = () => {
         setDisplay("none")
     }
@@ -45,7 +45,7 @@ const PlayArea = () => {
 
 
     const display = () => Display
-// --------------------------------------------------------------
+    // --------------------------------------------------------------
 
 
 
