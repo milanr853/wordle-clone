@@ -184,7 +184,6 @@ const Keyboard = () => {
     // ___EVENT LISTNERS___
     const printLetter = (e) => {
         if (GameContinue) {
-            console.log(e)
             if (getLetterMatrix[rowNum].length < 5) {
                 const newMatrix = [...getLetterMatrix]
                 newMatrix[rowNum] = [...newMatrix[rowNum], e.target.innerText.toUpperCase()]
