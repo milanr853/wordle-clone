@@ -77,45 +77,78 @@ const Keyboard = () => {
 
 
     const compareThenColorUpdate = (typedLetters, rowIndex) => {
+        let typed = typedLetters
         let current = currentWordLetters
-        const setTilesArr = []
 
-        const Row = document.querySelector(`#row${rowIndex}`).childNodes
-        Row.forEach(tile => {
-            setTilesArr.push({ tile, letter: tile.innerText, color: "#3a3a3c" })
-        })
+        // Looping Logic
+        // const setTilesArr = []
+        // const Row = document.querySelector(`#row${rowIndex}`).childNodes
+        // Row.forEach(tile => {
+        //     setTilesArr.push({ tile, letter: tile.innerText, color: "#3a3a3c" })
+        // })
 
-        setTilesArr.forEach((obj, ind) => {
-            if (obj.letter === current[ind]) {
-                obj.tile.style.backgroundColor = "#538d4e"
-                obj.tile.style.borderColor = "#538d4e"
-                obj.tile.classList.add("correct")
-                obj.color = "#538d4e"
-                current = current.replace(obj.tile.innerText, ".")
+        // setTilesArr.forEach((obj, ind) => {
+        //     if (obj.letter === current[ind]) {
+        //         obj.tile.style.backgroundColor = "#538d4e"
+        //         obj.tile.style.borderColor = "#538d4e"
+        //         obj.tile.classList.add("correct")
+        //         obj.color = "#538d4e"
+        //         current = current.replace(obj.tile.innerText, ".")
+        //     }
+        // })
+        // setTilesArr.forEach(obj => {
+        //     if (current.includes(obj.letter)) {
+        //         obj.tile.style.backgroundColor = "#b59f3b"
+        //         obj.tile.style.borderColor = "#b59f3b"
+        //         obj.tile.classList.add("almost")
+        //         obj.color = "#b59f3b"
+        //         current = current.replace(obj.tile.innerText, ".")
+        //     }
+        // })
+        // setTilesArr.forEach((obj, ind) => {
+        //     if (!obj.tile.className.includes('almost') && !obj.tile.className.includes('correct')) {
+        //         obj.tile.style.backgroundColor = '#3a3a3c'
+        //         obj.tile.style.borderColor = '#3a3a3c'
+        //     }
+        // })
+        // Row.forEach((tile, ind) => {
+        //     setTimeout(() => {
+        //         const key = document.getElementById(`key-${tile.innerText}`)
+        //         key.style.transition = '0.3s'
+        //         key.style.backgroundColor = setTilesArr[ind].color
+        //     }, (ind + 1) * 350);
+        // })
+
+        // Recurssion
+        function checkStatus(typed, current, n) {
+            if (n > 4) return
+
+            const key = document.getElementById(`key-${typed[n]}`)
+            const tile = document.querySelector(`#letterHolder${n}OfRow${rowIndex}`)
+
+            // Correct
+            if (typed[n] === current[n]) {
+                tile.style.backgroundColor = "#538d4e"
+                tile.style.borderColor = "#538d4e"
+                key.style.backgroundColor = "#538d4e"
+                current = current.replace(typed[n], ".")
             }
-        })
-        setTilesArr.forEach(obj => {
-            if (current.includes(obj.letter)) {
-                obj.tile.style.backgroundColor = "#b59f3b"
-                obj.tile.style.borderColor = "#b59f3b"
-                obj.tile.classList.add("almost")
-                obj.color = "#b59f3b"
-                current = current.replace(obj.tile.innerText, ".")
+            // Almost
+            else if (current.includes(typed[n])) {
+                tile.style.backgroundColor = "#b59f3b"
+                tile.style.borderColor = "#b59f3b"
+                key.style.backgroundColor = "#b59f3b"
+                current = current.replace(typed[n], ".")
             }
-        })
-        setTilesArr.forEach((obj, ind) => {
-            if (!obj.tile.className.includes('almost') && !obj.tile.className.includes('correct')) {
-                obj.tile.style.backgroundColor = '#3a3a3c'
-                obj.tile.style.borderColor = '#3a3a3c'
+            // Not Present
+            else {
+                tile.style.backgroundColor = '#3a3a3c'
+                tile.style.borderColor = '#3a3a3c'
+                key.style.backgroundColor = '#3a3a3c'
             }
-        })
-        Row.forEach((tile, ind) => {
-            setTimeout(() => {
-                const key = document.getElementById(`key-${tile.innerText}`)
-                key.style.transition = '0.3s'
-                key.style.backgroundColor = setTilesArr[ind].color
-            }, (ind + 1) * 350);
-        })
+            checkStatus(typed, current, n + 1)
+        }
+        checkStatus(typed, current, 0)
     }
 
 
@@ -254,7 +287,7 @@ const Keyboard = () => {
 
 
     // ___For adding On Key Down || Keyboard Events in react___
-    const handleKeyboard = useCallback((event) => {
+    const handleKeyboard = (event) => {
         if (GameContinue) {
             if (event.keyCode >= 65 && event.keyCode <= 90) {
                 if (getLetterMatrix[rowNum].length < 5) {
@@ -270,7 +303,7 @@ const Keyboard = () => {
                 backspace()
             }
         }
-    }, [])
+    }
 
 
     useEffect(() => {
